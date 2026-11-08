@@ -62,6 +62,19 @@
               </HoppSmartTab>
 
               <HoppSmartTab
+                v-if="example.schemaFields && example.schemaFields.length > 0"
+                id="schema-fields"
+                :label="t('documentation.schema_fields.title')"
+                class="flex h-full w-full flex-1 flex-col"
+              >
+                <div class="p-4">
+                  <CollectionsDocumentationSectionsSchemaFieldsTable
+                    :fields="example.schemaFields"
+                  />
+                </div>
+              </HoppSmartTab>
+
+              <HoppSmartTab
                 v-if="example.headers && example.headers.length > 0"
                 id="headers"
                 :label="t('documentation.response.headers')"
@@ -135,6 +148,7 @@ import IconCopy from "~icons/lucide/copy"
 import { useToast } from "~/composables/toast"
 import { getStatusCodeReasonPhrase } from "~/helpers/utils/statusCodes"
 import { useI18n } from "~/composables/i18n"
+import type { HoppSchemaField } from "@hoppscotch/data"
 
 const t = useI18n()
 
@@ -144,6 +158,7 @@ interface ResponseExample {
   headers?: Array<{ key: string; value: string }>
   body?: string
   contentType?: string
+  schemaFields?: HoppSchemaField[]
 }
 
 const props = defineProps<{
@@ -165,8 +180,12 @@ watch(
       // Initialize content tabs for each response example
       const newSelectedTabs: Record<number, string> = {}
       newExamples.forEach((example, index) => {
-        // Default to "body" tab if body exists, otherwise "headers"
-        newSelectedTabs[index] = example.body ? "body" : "headers"
+        // Default to "body" tab if body exists, otherwise schema fields / headers
+        newSelectedTabs[index] = example.body
+          ? "body"
+          : example.schemaFields && example.schemaFields.length > 0
+            ? "schema-fields"
+            : "headers"
       })
       selectedContentTabs.value = newSelectedTabs
     }

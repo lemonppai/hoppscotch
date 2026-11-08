@@ -20,6 +20,18 @@
       />
     </HoppSmartTab>
     <HoppSmartTab
+      v-if="doc.response.schemaFields && doc.response.schemaFields.length > 0"
+      id="schema-fields"
+      :label="t('documentation.schema_fields.title')"
+      class="flex flex-1 flex-col"
+    >
+      <div class="p-4">
+        <CollectionsDocumentationSectionsSchemaFieldsTable
+          :fields="doc.response.schemaFields"
+        />
+      </div>
+    </HoppSmartTab>
+    <HoppSmartTab
       v-if="doc.response.headers"
       id="headers"
       :label="t('response.headers')"

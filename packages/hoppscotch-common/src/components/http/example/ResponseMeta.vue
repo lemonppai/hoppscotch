@@ -22,6 +22,17 @@
           </div>
         </div>
       </div>
+      <!-- Response description from the imported API spec (OpenAPI responses
+           are named after their `description`) -->
+      <div
+        v-if="responseCtx.name"
+        class="mt-2 flex items-start gap-2 text-tiny text-secondaryLight"
+      >
+        <span class="flex-shrink-0 font-semibold text-secondary">
+          {{ t("documentation.response.description") }}:
+        </span>
+        <span class="break-all">{{ responseCtx.name }}</span>
+      </div>
     </div>
   </div>
 </template>

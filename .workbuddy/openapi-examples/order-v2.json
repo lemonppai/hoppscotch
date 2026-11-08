@@ -1,0 +1,260 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "订单服务 API (Swagger 2.0)",
+    "version": "1.0.0",
+    "description": "用于验证 Hoppscotch 对 Swagger 2.0 的导入：body 参数描述、formData 参数、响应 schema 字段表。"
+  },
+  "host": "api.example.com",
+  "basePath": "/v2",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "name": "X-API-Key",
+      "in": "header",
+      "description": "在请求头中携带 API Key"
+    }
+  },
+  "security": [{ "apiKeyAuth": [] }],
+  "tags": [
+    { "name": "Orders", "description": "订单相关接口" },
+    { "name": "Auth", "description": "认证接口" }
+  ],
+  "paths": {
+    "/orders": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "查询订单列表",
+        "description": "支持按状态与时间范围过滤。",
+        "operationId": "listOrders",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "订单状态过滤",
+            "required": false,
+            "type": "string",
+            "enum": ["created", "paid", "shipped", "closed"]
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "下单时间起（含），ISO 8601 日期",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "下单时间止（含），ISO 8601 日期",
+            "required": false,
+            "type": "string",
+            "format": "date"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "查询成功，返回订单分页结果",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "总记录数"
+                },
+                "items": {
+                  "type": "array",
+                  "description": "当前页订单列表",
+                  "items": { "$ref": "#/definitions/Order" }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "API Key 无效",
+            "schema": { "$ref": "#/definitions/Error" }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Orders"],
+        "summary": "创建订单",
+        "description": "创建后状态为 created，需另行支付。",
+        "operationId": "createOrder",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "订单创建入参，items 不能为空",
+            "required": true,
+            "schema": { "$ref": "#/definitions/OrderCreateInput" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "创建成功，返回完整订单",
+            "schema": { "$ref": "#/definitions/Order" }
+          },
+          "422": {
+            "description": "参数校验失败",
+            "schema": { "$ref": "#/definitions/Error" }
+          }
+        }
+      }
+    },
+    "/orders/{orderId}/cancel": {
+      "post": {
+        "tags": ["Orders"],
+        "summary": "取消订单",
+        "operationId": "cancelOrder",
+        "consumes": ["application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "description": "订单 ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "reason",
+            "in": "formData",
+            "description": "取消原因，会同步给买家",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取消成功",
+            "schema": { "$ref": "#/definitions/Order" }
+          },
+          "404": { "description": "订单不存在" }
+        }
+      }
+    },
+    "/auth/token": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "获取访问令牌",
+        "operationId": "issueToken",
+        "security": [],
+        "consumes": ["application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "formData",
+            "description": "应用 ID",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "clientSecret",
+            "in": "formData",
+            "description": "应用密钥",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "签发成功",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string",
+                  "description": "访问令牌，有效期 1 小时"
+                },
+                "expiresIn": {
+                  "type": "integer",
+                  "description": "有效期秒数"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "凭据无效",
+            "schema": { "$ref": "#/definitions/Error" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "description": "订单对象",
+      "required": ["id", "status", "totalAmount"],
+      "properties": {
+        "id": { "type": "string", "description": "订单 ID" },
+        "status": {
+          "type": "string",
+          "description": "订单状态",
+          "enum": ["created", "paid", "shipped", "closed"]
+        },
+        "totalAmount": {
+          "type": "number",
+          "format": "double",
+          "description": "订单总金额（元）"
+        },
+        "buyerName": { "type": "string", "description": "买家姓名" },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "下单时间（ISO 8601）"
+        },
+        "items": {
+          "type": "array",
+          "description": "订单明细",
+          "items": { "$ref": "#/definitions/OrderItem" }
+        }
+      }
+    },
+    "OrderCreateInput": {
+      "type": "object",
+      "description": "订单创建入参",
+      "required": ["buyerName", "items"],
+      "properties": {
+        "buyerName": { "type": "string", "description": "买家姓名" },
+        "remark": { "type": "string", "description": "买家备注" },
+        "items": {
+          "type": "array",
+          "description": "订单明细，至少一条",
+          "items": { "$ref": "#/definitions/OrderItem" }
+        }
+      }
+    },
+    "OrderItem": {
+      "type": "object",
+      "description": "订单明细行",
+      "required": ["sku", "quantity"],
+      "properties": {
+        "sku": { "type": "string", "description": "商品 SKU 编码" },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "description": "购买数量，需大于 0"
+        },
+        "price": {
+          "type": "number",
+          "format": "double",
+          "description": "成交单价（元）"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "description": "统一错误响应体",
+      "properties": {
+        "code": { "type": "string", "description": "业务错误码" },
+        "message": { "type": "string", "description": "错误说明" }
+      }
+    }
+  }
+}

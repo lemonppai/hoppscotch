@@ -107,6 +107,7 @@
 
         <CollectionsDocumentationSectionsRequestBody
           :body="(request as HoppRESTRequest)?.body"
+          :api-spec-meta="restApiSpecMeta"
         />
 
         <CollectionsDocumentationSectionsResponse
@@ -128,9 +129,11 @@ import {
   HoppCollectionVariable,
   HoppGQLRequest,
   HoppRESTRequest,
+  HoppRESTRequestResponse,
   isGQLRequest,
   makeRESTRequest,
 } from "@hoppscotch/data"
+import type { HoppAPISpecMeta } from "@hoppscotch/data"
 import { HoppInheritedProperty } from "~/helpers/types/HoppInheritedProperties"
 import { ref, computed, watch } from "vue"
 import IconCopy from "~icons/lucide/copy"
@@ -332,6 +335,8 @@ function getResponseExamples() {
           headers: response.headers || [],
           body: response.body || "",
           contentType: "application/json",
+          // OpenAPI-derived field table, attached by the importer
+          schemaFields: (response as HoppRESTRequestResponse).schemaFields,
         }
         examples.push(example)
       }
@@ -342,6 +347,12 @@ function getResponseExamples() {
 
   return null
 }
+
+// API spec metadata extracted by the OpenAPI importer (undefined for GQL)
+const restApiSpecMeta = computed<HoppAPISpecMeta | null>(() => {
+  if (!props.request || isGqlRequest.value) return null
+  return (props.request as HoppRESTRequest).apiSpecMeta ?? null
+})
 
 function handleBlur(): void {
   // Only store changes in documentation service if there's actually a change

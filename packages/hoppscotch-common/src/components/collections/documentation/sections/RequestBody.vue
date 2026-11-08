@@ -6,6 +6,12 @@
       {{ t("documentation.body.title") }}
     </h2>
     <div class="p-4">
+      <div
+        v-if="apiSpecMeta?.requestBodyDescription"
+        class="mb-3 text-sm text-secondaryLight whitespace-pre-wrap"
+      >
+        {{ apiSpecMeta.requestBodyDescription }}
+      </div>
       <div class="flex items-center mb-2">
         <span class="font-medium text-secondaryDark w-32"
           >{{ t("documentation.body.content_type") }}:</span
@@ -56,19 +62,36 @@
           class="bg-primaryLight p-3 rounded my-2 overflow-auto max-h-64 font-mono text-secondaryLight"
           >{{ body.body }}</pre>
       </div>
+
+      <!-- Schema field table extracted from the OpenAPI request body schema -->
+      <CollectionsDocumentationSectionsSchemaFieldsTable
+        class="mt-4"
+        :fields="apiSpecMeta?.bodySchemaFields"
+        :title="t('documentation.schema_fields.title')"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { HoppRESTReqBody, parseRawKeyValueEntries } from "@hoppscotch/data"
+import {
+  HoppRESTReqBody,
+  HoppAPISpecMeta,
+  parseRawKeyValueEntries,
+} from "@hoppscotch/data"
 import { useI18n } from "~/composables/i18n"
 
 const t = useI18n()
 
-defineProps<{
-  body: HoppRESTReqBody | null | undefined
-}>()
+withDefaults(
+  defineProps<{
+    body: HoppRESTReqBody | null | undefined
+    apiSpecMeta?: HoppAPISpecMeta | null
+  }>(),
+  {
+    apiSpecMeta: null,
+  }
+)
 
 /**
  * Format JSON string for display

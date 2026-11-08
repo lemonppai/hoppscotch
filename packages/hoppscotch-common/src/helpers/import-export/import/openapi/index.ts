@@ -12,6 +12,8 @@ import {
   HoppRESTHeader,
   HoppRESTParam,
   HoppRESTReqBody,
+  HoppAPISpecMeta,
+  HoppSchemaField,
   knownContentTypes,
   makeRESTRequest,
   HoppCollection,
@@ -376,6 +378,7 @@ const parseOpenAPIV3Responses = (
       headers,
       body: stringifiedBody,
       originalRequest,
+      schemaFields: extractOpenAPISchemaFields(mediaObject?.schema),
     }
   }
 
@@ -451,6 +454,7 @@ const parseOpenAPIV2Responses = (
       headers,
       body: stringifiedBody,
       originalRequest,
+      schemaFields: extractOpenAPISchemaFields(response.schema),
     }
   }
 
@@ -729,6 +733,273 @@ const parseOpenAPIBody = (
   isOpenAPIV3Operation(doc, op)
     ? parseOpenAPIV3Body(doc, op)
     : parseOpenAPIV2Body(op)
+
+/**
+ * Human-readable type label for a (dereferenced) OpenAPI schema object,
+ * e.g. `string`, `integer<int64>`, `array<User>`. Tolerant by design: the
+ * docs are dereferenced before this runs, so `$ref` shouldn't appear, but
+ * malformed specs shouldn't crash the import either.
+ */
+const getOpenAPISchemaTypeLabel = (schema: unknown): string => {
+  if (!schema || typeof schema !== "object") return "object"
+
+  const s = schema as {
+    $ref?: unknown
+    type?: unknown
+    format?: unknown
+    items?: unknown
+    properties?: unknown
+  }
+
+  if (typeof s.$ref === "string") return "object"
+
+  let type = ""
+  if (typeof s.type === "string") {
+    type = s.type
+  } else if (Array.isArray(s.type) && typeof s.type[0] === "string") {
+    // OpenAPI 3.1 allows `type` to be an array (e.g. ["string", "null"])
+    type = s.type[0]
+  } else if (s.properties && typeof s.properties === "object") {
+    type = "object"
+  } else if (s.items) {
+    type = "array"
+  }
+
+  if (type === "array" && s.items) {
+    type = `array<${getOpenAPISchemaTypeLabel(s.items)}>`
+  }
+
+  if (type === "") type = "object"
+
+  if (typeof s.format === "string" && s.format !== "" && type !== "object") {
+    return `${type}<${s.format}>`
+  }
+
+  return type
+}
+
+/**
+ * Guard against pathological or self-referencing schemas. Swagger Parser
+ * dereferences `$ref` into inline objects, so recursive models (e.g. a tree
+ * node referencing itself) become real object cycles — the `ancestors` set
+ * stops those, and this caps the depth for very deep but finite models.
+ */
+const MAX_OPENAPI_SCHEMA_DEPTH = 8
+
+type RawOpenAPISchema = Record<string, unknown>
+
+const asOpenAPISchema = (value: unknown): RawOpenAPISchema | null =>
+  value && typeof value === "object" && !Array.isArray(value)
+    ? (value as RawOpenAPISchema)
+    : null
+
+/**
+ * Effective property map of an object-ish schema node.
+ *
+ * Handles `allOf` (members merged, later definitions win) and
+ * `oneOf`/`anyOf` (first member that declares properties wins) — both survive
+ * dereferencing, so a plain `schema.properties` read would miss them.
+ */
+const collectOpenAPISchemaProperties = (
+  schema: unknown,
+  seen: Set<unknown>
+): { properties: Record<string, unknown>; required: Set<string> } | null => {
+  const s = asOpenAPISchema(schema)
+  if (!s || seen.has(s)) return null
+  seen.add(s)
+
+  const required = new Set<string>()
+  if (Array.isArray(s.required)) {
+    for (const key of s.required) {
+      if (typeof key === "string") required.add(key)
+    }
+  }
+
+  const ownProperties = asOpenAPISchema(s.properties)
+  const merged: Record<string, unknown> = {}
+  let contributes = ownProperties !== null
+
+  const allOf = s.allOf
+  if (Array.isArray(allOf)) {
+    for (const branch of allOf) {
+      const nested = collectOpenAPISchemaProperties(branch, new Set(seen))
+      if (!nested) continue
+      Object.assign(merged, nested.properties)
+      nested.required.forEach((k) => required.add(k))
+      contributes = true
+    }
+  }
+
+  // `oneOf`/`anyOf`: the first member that declares properties is representative
+  if (!contributes) {
+    for (const key of ["oneOf", "anyOf"] as const) {
+      const branches = s[key]
+      if (!Array.isArray(branches)) continue
+
+      for (const branch of branches) {
+        const nested = collectOpenAPISchemaProperties(branch, new Set(seen))
+        if (!nested) continue
+        Object.assign(merged, nested.properties)
+        nested.required.forEach((k) => required.add(k))
+        contributes = true
+        break
+      }
+
+      if (contributes) break
+    }
+  }
+
+  if (!contributes) return null
+
+  // Own definition wins over inherited composition members
+  return { properties: { ...merged, ...(ownProperties ?? {}) }, required }
+}
+
+/**
+ * Nested children of a field: object schemas expand their properties, arrays
+ * expand the properties of their item object. Scalars have no children.
+ *
+ * `ancestors` holds the schema nodes already visited on this branch — the
+ * recursion below rejects repeats, which is what stops recursive models
+ * (already inlined by dereferencing) from looping forever.
+ */
+const extractOpenAPISchemaChildren = (
+  schema: unknown,
+  depth: number,
+  ancestors: Set<unknown>
+): HoppSchemaField[] => {
+  const s = asOpenAPISchema(schema)
+  if (!s || depth + 1 >= MAX_OPENAPI_SCHEMA_DEPTH) return []
+
+  const direct = extractOpenAPISchemaFields(s, depth + 1, ancestors)
+  if (direct.length > 0) return direct
+
+  const items = asOpenAPISchema(s.items)
+  if (items) return extractOpenAPISchemaFields(items, depth + 1, ancestors)
+
+  return []
+}
+
+/**
+ * Turn an object schema into documentation field rows (name / type /
+ * required / description), recursing into nested objects and array item
+ * objects so the UI can render an Apifox-style expandable tree.
+ */
+const extractOpenAPISchemaFields = (
+  schema: unknown,
+  depth = 0,
+  ancestors: Set<unknown> = new Set()
+): HoppSchemaField[] => {
+  if (depth >= MAX_OPENAPI_SCHEMA_DEPTH) return []
+
+  const s = asOpenAPISchema(schema)
+  if (!s || ancestors.has(s)) return []
+
+  const resolved = collectOpenAPISchemaProperties(s, new Set(ancestors))
+  if (!resolved) return []
+
+  const nextAncestors = new Set(ancestors)
+  nextAncestors.add(s)
+
+  return Object.entries(resolved.properties).map(([name, rawProp]) => {
+    const prop = asOpenAPISchema(rawProp)
+    const children = extractOpenAPISchemaChildren(prop, depth, nextAncestors)
+
+    const field: HoppSchemaField = {
+      name,
+      type: getOpenAPISchemaTypeLabel(rawProp),
+      required: resolved.required.has(name),
+      description:
+        typeof prop?.description === "string" ? prop.description : "",
+    }
+
+    if (children.length > 0) field.children = children
+
+    return field
+  })
+}
+
+const extractV3RequestBodyMeta = (
+  op: OpenAPIV3.OperationObject | OpenAPIV31.OperationObject
+): { requestBodyDescription: string; bodySchemaFields: HoppSchemaField[] } => {
+  const requestBody = op.requestBody as
+    OpenAPIV3.RequestBodyObject | OpenAPIV31.RequestBodyObject | undefined
+
+  if (!requestBody) {
+    return { requestBodyDescription: "", bodySchemaFields: [] }
+  }
+
+  const media = Object.values(requestBody.content ?? {})[0] as
+    OpenAPIV3.MediaTypeObject | OpenAPIV31.MediaTypeObject | undefined
+
+  return {
+    requestBodyDescription: requestBody.description ?? "",
+    bodySchemaFields: extractOpenAPISchemaFields(media?.schema),
+  }
+}
+
+const extractV2RequestBodyMeta = (
+  op: OpenAPIV2.OperationObject,
+  // Path item level parameters are inherited by operations and may hold
+  // `in: formData` fields, so the merged list is preferred when available.
+  parameters?: OpenAPIParamsType[]
+): { requestBodyDescription: string; bodySchemaFields: HoppSchemaField[] } => {
+  const params = (parameters ??
+    op.parameters ??
+    []) as unknown as OpenAPIV2.Parameter[]
+
+  const bodyParam = params.find((param) => param.in === "body") as
+    OpenAPIV2.InBodyParameterObject | undefined
+
+  if (bodyParam) {
+    return {
+      requestBodyDescription: bodyParam.description ?? "",
+      bodySchemaFields: extractOpenAPISchemaFields(bodyParam.schema),
+    }
+  }
+
+  // Swagger 2.0 has no `requestBody`; form payloads come from `in: formData`
+  // parameters instead, so map them onto the same field rows.
+  const formParams = params.filter((param) => param.in === "formData")
+
+  return {
+    requestBodyDescription: "",
+    bodySchemaFields: formParams.map((param) => ({
+      name: param.name,
+      type:
+        param.type === "file"
+          ? "file"
+          : getOpenAPISchemaTypeLabel({
+              type: param.type ?? "string",
+              format: param.format,
+            }),
+      required: param.required === true,
+      description: param.description ?? "",
+    })),
+  }
+}
+
+/**
+ * Collect OpenAPI documentation metadata that doesn't fit the request model:
+ * requestBody description and the request-body schema field table. Stored on
+ * the request as `apiSpecMeta` and rendered by the documentation preview.
+ *
+ * Response field tables are attached to the response objects themselves (see
+ * `schemaFields` in `parseOpenAPIV3Responses` / `parseOpenAPIV2Responses`), so
+ * both the documentation preview and the example response panels can render
+ * them without a lookup.
+ */
+const buildOpenAPIRequestMeta = (
+  doc: OpenAPI.Document,
+  op: OpenAPIOperationType,
+  parameters: OpenAPIParamsType[] = []
+): HoppAPISpecMeta => {
+  const isV3 = isOpenAPIV3Operation(doc, op)
+
+  return isV3
+    ? extractV3RequestBodyMeta(op as OpenAPIV3.OperationObject)
+    : extractV2RequestBodyMeta(op as OpenAPIV2.OperationObject, parameters)
+}
 
 const resolveOpenAPIV3SecurityObj = (
   scheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV31.SecuritySchemeObject,
@@ -1206,6 +1477,26 @@ const parseOpenAPIUrl = (
   return { prefix, baseUrlValue: null }
 }
 
+/**
+ * Merges path-item level `parameters` with operation level ones.
+ *
+ * OpenAPI allows parameters to be declared once on the path item and inherited
+ * by every operation below it (very common for `in: path` variables). Operation
+ * level entries override path level ones when (in, name) collide.
+ */
+const mergeOpenAPIParams = (
+  pathParams: OpenAPIParamsType[],
+  opParams: OpenAPIParamsType[]
+): OpenAPIParamsType[] => {
+  const keyOf = (param: OpenAPIParamsType) => `${param.in}:${param.name}`
+
+  const merged = new Map<string, OpenAPIParamsType>()
+  pathParams.forEach((param) => merged.set(keyOf(param), param))
+  opParams.forEach((param) => merged.set(keyOf(param), param))
+
+  return [...merged.values()]
+}
+
 const convertPathToHoppReqs = (
   doc: OpenAPI.Document,
   pathName: string,
@@ -1232,6 +1523,12 @@ const convertPathToHoppReqs = (
           ? openAPIUrl + openAPIPath.slice(1)
           : openAPIUrl + openAPIPath
 
+      // Path level parameters are inherited by every operation under the path
+      const parameters = mergeOpenAPIParams(
+        (pathObj.parameters as OpenAPIParamsType[] | undefined) ?? [],
+        (info.parameters as OpenAPIParamsType[] | undefined) ?? []
+      )
+
       const res: {
         request: HoppRESTRequest
         metadata: {
@@ -1245,12 +1542,8 @@ const convertPathToHoppReqs = (
           endpoint,
 
           // We don't need to worry about reference types as the Dereferencing pass should remove them
-          params: parseOpenAPIParams(
-            (info.parameters as OpenAPIParamsType[] | undefined) ?? []
-          ),
-          headers: parseOpenAPIHeaders(
-            (info.parameters as OpenAPIParamsType[] | undefined) ?? []
-          ),
+          params: parseOpenAPIParams(parameters),
+          headers: parseOpenAPIHeaders(parameters),
 
           auth: parseOpenAPIAuth(doc, info),
 
@@ -1259,9 +1552,7 @@ const convertPathToHoppReqs = (
           preRequestScript: "",
           testScript: "",
 
-          requestVariables: parseOpenAPIVariables(
-            (info.parameters as OpenAPIParamsType[] | undefined) ?? []
-          ),
+          requestVariables: parseOpenAPIVariables(parameters),
 
           responses: parseOpenAPIResponses(
             doc,
@@ -1272,18 +1563,14 @@ const convertPathToHoppReqs = (
               body: parseOpenAPIBody(doc, info),
               endpoint,
               // We don't need to worry about reference types as the Dereferencing pass should remove them
-              params: parseOpenAPIParams(
-                (info.parameters as OpenAPIParamsType[] | undefined) ?? []
-              ),
-              headers: parseOpenAPIHeaders(
-                (info.parameters as OpenAPIParamsType[] | undefined) ?? []
-              ),
+              params: parseOpenAPIParams(parameters),
+              headers: parseOpenAPIHeaders(parameters),
               method: method.toUpperCase(),
-              requestVariables: parseOpenAPIVariables(
-                (info.parameters as OpenAPIParamsType[] | undefined) ?? []
-              ),
+              requestVariables: parseOpenAPIVariables(parameters),
             })
           ),
+
+          apiSpecMeta: buildOpenAPIRequestMeta(doc, info, parameters),
         }),
         metadata: {
           tags: info.tags ?? [],

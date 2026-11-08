@@ -1,0 +1,501 @@
+openapi: 3.0.3
+
+info:
+  title: 用户中心 API
+  version: 1.0.0
+  description: |
+    用于验证 Hoppscotch OpenAPI 导入能力的示例文档。
+
+    覆盖范围：
+    - 路径参数 / 查询参数 / 请求头 的描述（导入后进入 Parameters 表格）
+    - requestBody 的整体描述 + schema 字段级说明（导入后进入「请求体」区与 Schema Fields 表格）
+    - 每个响应的描述 + 响应 schema 字段表（导入后进入响应区，含「Schema Fields」标签页）
+    - 多种请求体类型：JSON / x-www-form-urlencoded / multipart/form-data / text-plain
+    - 带 $ref 的公共 schema（导入器会先 dereference 再提取字段）
+  contact:
+    name: API 支持
+    email: api@example.com
+  license:
+    name: MIT
+
+servers:
+  - url: https://api.example.com/v1
+    description: 生产环境
+  - url: http://localhost:3170/v1
+    description: 本地开发环境
+
+tags:
+  - name: Users
+    description: 用户管理相关接口
+  - name: Auth
+    description: 认证与登录
+  - name: Files
+    description: 文件上传
+  - name: System
+    description: 系统与运维接口
+
+security:
+  - bearerAuth: []
+
+paths:
+  /users:
+    get:
+      tags: [Users]
+      summary: 查询用户列表
+      description: 分页查询用户，支持关键字模糊匹配与状态过滤。
+      operationId: listUsers
+      parameters:
+        - name: page
+          in: query
+          description: 页码，从 1 开始
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            minimum: 1
+        - name: pageSize
+          in: query
+          description: 每页条数，最大值 100
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 20
+            maximum: 100
+        - name: keyword
+          in: query
+          description: 搜索关键字，匹配用户名或邮箱
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: 用户状态过滤，不传表示全部
+          required: false
+          schema:
+            type: string
+            enum: [active, disabled, pending]
+        - name: X-Request-Id
+          in: header
+          description: 请求追踪 ID，用于日志排查
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 查询成功，返回用户分页结果
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    format: int64
+                    description: 符合条件的总记录数
+                  page:
+                    type: integer
+                    description: 当前页码
+                  pageSize:
+                    type: integer
+                    description: 每页条数
+                  list:
+                    type: array
+                    description: 当前页用户列表
+                    items:
+                      $ref: '#/components/schemas/User'
+        '401':
+          description: 未认证或 token 已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      tags: [Users]
+      summary: 创建用户
+      description: 仅管理员可调用。用户名与邮箱在系统内唯一。
+      operationId: createUser
+      requestBody:
+        description: 新建用户的资料，用户名与密码为必填项
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateInput'
+            example:
+              username: alice
+              email: alice@example.com
+              password: P@ssw0rd
+              age: 28
+              roles: [developer]
+              profile:
+                nickname: 爱丽丝
+                avatar: https://cdn.example.com/a.png
+      responses:
+        '201':
+          description: 创建成功，返回完整用户对象
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '409':
+          description: 用户名或邮箱已存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: 参数校验失败
+
+  /users/{userId}:
+    parameters:
+      - name: userId
+        in: path
+        description: 用户唯一标识
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      tags: [Users]
+      summary: 获取用户详情
+      description: 按 ID 查询单个用户。
+      operationId: getUser
+      responses:
+        '200':
+          description: 查询成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags: [Users]
+      summary: 全量更新用户
+      description: 会用提交的内容整体覆盖用户资料，未提交的字段置空。
+      operationId: replaceUser
+      requestBody:
+        description: 更新后的用户资料
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateInput'
+      responses:
+        '200':
+          description: 更新成功，返回更新后的用户
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags: [Users]
+      summary: 删除用户
+      description: 软删除，数据保留 30 天后清理。
+      operationId: deleteUser
+      responses:
+        '204':
+          description: 删除成功，无返回内容
+        '404':
+          description: 用户不存在
+
+  /users/{userId}/status:
+    patch:
+      tags: [Users]
+      summary: 修改用户状态
+      operationId: updateUserStatus
+      parameters:
+        - name: userId
+          in: path
+          description: 用户唯一标识
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: 目标状态
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  description: 新的用户状态
+                  enum: [active, disabled, pending]
+                reason:
+                  type: string
+                  description: 变更原因，会写入审计日志
+      responses:
+        '200':
+          description: 状态修改成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: 表单登录
+      description: 传统表单登录，成功后通过 Set-Cookie 下发会话。
+      operationId: login
+      security: []
+      requestBody:
+        description: 登录凭据，以 x-www-form-urlencoded 提交
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [username, password]
+              properties:
+                username:
+                  type: string
+                  description: 用户名或邮箱
+                password:
+                  type: string
+                  description: 登录密码，至少 8 位
+                  format: password
+                remember:
+                  type: boolean
+                  description: 是否记住登录状态 30 天
+      responses:
+        '200':
+          description: 登录成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                    description: 访问令牌，有效期 1 小时
+                  refreshToken:
+                    type: string
+                    description: 刷新令牌，有效期 30 天
+                  user:
+                    $ref: '#/components/schemas/User'
+        '401':
+          description: 用户名或密码错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /files:
+    post:
+      tags: [Files]
+      summary: 上传附件
+      description: 单次最多 5 个文件，总大小不超过 20MB。
+      operationId: uploadFiles
+      requestBody:
+        description: 以 multipart/form-data 提交文件与元信息
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 待上传的文件内容
+                folder:
+                  type: string
+                  description: 归属目录名，默认根目录
+                overwrite:
+                  type: boolean
+                  description: 同名文件是否覆盖
+      responses:
+        '201':
+          description: 上传成功，返回文件元信息
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fileId:
+                    type: string
+                    description: 文件 ID
+                  url:
+                    type: string
+                    description: 可访问的下载地址
+                  size:
+                    type: integer
+                    format: int64
+                    description: 文件字节数
+        '413':
+          description: 文件超过大小限制
+
+  /reports/export:
+    post:
+      tags: [System]
+      summary: 导出报表（纯文本）
+      description: 用于验证非 JSON 类型的请求体在文档中的渲染。
+      operationId: exportReport
+      requestBody:
+        description: 纯文本形式的导出参数，逗号分隔
+        required: false
+        content:
+          text/plain:
+            schema:
+              type: string
+            example: 'users,2026-01-01,2026-11-01'
+      responses:
+        '200':
+          description: 导出成功，直接返回 CSV 文本
+          content:
+            text/csv:
+              schema:
+                type: string
+
+  /health:
+    get:
+      tags: [System]
+      summary: 健康检查
+      description: 无需认证，用于探活与负载均衡摘除。
+      operationId: healthCheck
+      security: []
+      responses:
+        '200':
+          description: 服务正常
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ok
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 在 Authorization 头中携带 Bearer <token>
+
+  schemas:
+    User:
+      type: object
+      description: 用户对象（只读视图，不含密码）
+      required: [id, username, email]
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: 用户 ID
+          readOnly: true
+        username:
+          type: string
+          description: 用户名，3-32 位，全局唯一
+          minLength: 3
+          maxLength: 32
+        email:
+          type: string
+          format: email
+          description: 邮箱地址，用于登录与通知
+        age:
+          type: integer
+          format: int32
+          description: 年龄
+          minimum: 0
+          maximum: 150
+        roles:
+          type: array
+          description: 角色列表
+          items:
+            type: string
+        profile:
+          type: object
+          description: 扩展资料
+          properties:
+            nickname:
+              type: string
+              description: 昵称
+            avatar:
+              type: string
+              format: uri
+              description: 头像地址
+        status:
+          type: string
+          description: 账号状态
+          enum: [active, disabled, pending]
+        createdAt:
+          type: string
+          format: date-time
+          description: 创建时间（ISO 8601）
+          readOnly: true
+        updatedAt:
+          type: string
+          format: date-time
+          description: 最后更新时间
+          readOnly: true
+
+    UserCreateInput:
+      type: object
+      description: 创建 / 更新用户时的入参
+      required: [username, email, password]
+      properties:
+        username:
+          type: string
+          description: 用户名，3-32 位，全局唯一
+        email:
+          type: string
+          format: email
+          description: 邮箱地址
+        password:
+          type: string
+          format: password
+          description: 登录密码，至少 8 位
+          minLength: 8
+        age:
+          type: integer
+          format: int32
+          description: 年龄
+        roles:
+          type: array
+          description: 角色列表，默认 developer
+          items:
+            type: string
+        profile:
+          type: object
+          description: 扩展资料
+          properties:
+            nickname:
+              type: string
+              description: 昵称
+            avatar:
+              type: string
+              description: 头像地址
+
+    Error:
+      type: object
+      description: 统一错误响应体
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          description: 业务错误码，如 USER_NOT_FOUND
+        message:
+          type: string
+          description: 可直接展示给用户的错误说明
+        details:
+          type: array
+          description: 字段级校验错误明细
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: 出错的字段名
+              reason:
+                type: string
+                description: 出错原因

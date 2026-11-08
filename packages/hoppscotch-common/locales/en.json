@@ -511,6 +511,18 @@
       "no_params": "No parameters defined",
       "title": "Parameters"
     },
+    "schema_fields": {
+      "collapse": "Collapse all",
+      "copy": "Copy docs",
+      "copied": "Schema fields copied as Markdown",
+      "copy_failed": "Failed to copy schema fields",
+      "description": "Description",
+      "expand": "Expand all",
+      "field": "Field",
+      "required": "Required",
+      "title": "Schema Fields",
+      "type": "Type"
+    },
     "percent_complete": "% complete",
     "processing_documentation": "Processing Documentation",
     "publish": {
@@ -574,6 +586,7 @@
     "response": {
       "body": "Response Body",
       "copy": "Copy response",
+      "description": "Description",
       "example_copied": "Response example copied to clipboard!",
       "example_copy_failed": "Failed to copy response example",
       "headers": "Response Headers",
