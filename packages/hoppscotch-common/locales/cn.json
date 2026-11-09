@@ -511,6 +511,18 @@
         "no_params": "未定义参数",
         "title": "参数"
     },
+    "schema_fields": {
+        "collapse": "全部折叠",
+        "copy": "复制文档",
+        "copied": "Schema 字段已复制为 Markdown",
+        "copy_failed": "复制 Schema 字段失败",
+        "description": "描述",
+        "expand": "全部展开",
+        "field": "字段",
+        "required": "必填",
+        "title": "Schema 字段",
+        "type": "类型"
+    },
     "percent_complete": "完成百分比",
     "processing_documentation": "正在处理文档",
     "publish": {

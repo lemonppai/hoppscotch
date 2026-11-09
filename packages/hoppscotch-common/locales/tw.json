@@ -265,7 +265,19 @@
   },
   "documentation": {
     "generate": "產生文件",
-    "generate_message": "匯入 Hoppscotch 集合以隨時隨地產生 API 文件。"
+    "generate_message": "匯入 Hoppscotch 集合以隨時隨地產生 API 文件。",
+    "schema_fields": {
+      "collapse": "全部摺疊",
+      "copy": "複製文件",
+      "copied": "Schema 欄位已複製為 Markdown",
+      "copy_failed": "複製 Schema 欄位失敗",
+      "description": "描述",
+      "expand": "全部展開",
+      "field": "欄位",
+      "required": "必填",
+      "title": "Schema 欄位",
+      "type": "類型"
+    }
   },
   "empty": {
     "authorization": "該請求沒有使用任何授權",

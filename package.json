@@ -97,9 +97,11 @@
       "canvas",
       "core-js",
       "esbuild",
-      "isolated-vm",
       "prisma",
       "vue-demi"
+    ],
+    "ignoredBuiltDependencies": [
+      "isolated-vm"
     ]
   }
 }
