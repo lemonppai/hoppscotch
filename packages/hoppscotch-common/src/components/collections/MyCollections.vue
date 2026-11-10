@@ -52,6 +52,10 @@
             :collections-type="collectionsType.type"
             :is-open="isOpen"
             :is-last-item="node.data.isLastItem"
+            :refresh-collection-loading="
+              !!node.data.data.data._ref_id &&
+              refreshingRefID === node.data.data.data._ref_id
+            "
             :is-selected="
               isSelected({
                 collectionIndex: parseInt(node.id),
@@ -97,6 +101,14 @@
               emit('duplicate-collection', {
                 pathOrID: node.id,
                 collectionSyncID: node.data.data.data.id,
+              })
+            "
+            @refresh-collection="
+              node.data.type === 'collections' &&
+              emit('refresh-collection', {
+                pathOrID: node.id,
+                collectionRefID: node.data.data.data._ref_id,
+                collection: node.data.data.data,
               })
             "
             @open-documentation="
@@ -556,6 +568,12 @@ const props = defineProps({
     default: null,
     required: false,
   },
+  /** `_ref_id` of the collection currently being refreshed from its spec. */
+  refreshingRefID: {
+    type: String,
+    default: "",
+    required: false,
+  },
 })
 
 type ResponsePayload = {
@@ -615,6 +633,14 @@ const emit = defineEmits<{
     payload: {
       pathOrID: string
       collectionSyncID?: string
+    }
+  ): void
+  (
+    event: "refresh-collection",
+    payload: {
+      pathOrID: string
+      collectionRefID: string
+      collection: HoppCollection
     }
   ): void
   (

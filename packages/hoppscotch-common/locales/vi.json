@@ -196,7 +196,18 @@
     "select_location": "Chọn vị trí",
     "details": "Details",
     "select_team": "Chọn một nhóm",
-    "team_collections": "Bộ sưu tập của nhóm"
+    "team_collections": "Bộ sưu tập của nhóm",
+    "refresh_from_source": "Làm mới từ OpenAPI",
+    "refresh_success": "Bộ sưu tập đã được làm mới ({added} thêm mới, {updated} cập nhật, {removed} không còn trong đặc tả)",
+    "refresh_fetch_failed": "Không thể truy cập URL tài liệu OpenAPI",
+    "refresh_parse_failed": "Không thể phân tích tài liệu OpenAPI",
+    "refresh_no_source": "Bộ sưu tập này không có nguồn OpenAPI để làm mới",
+    "refresh_missing": "Bộ sưu tập không còn tồn tại",
+    "connect_openapi_source": "Kết nối nguồn OpenAPI",
+    "connect_openapi_source_label": "URL tài liệu OpenAPI",
+    "connect_openapi_source_description": "Bộ sưu tập này chưa ghi lại nguồn OpenAPI. Nhập URL tài liệu một lần, hệ thống sẽ ghi nhớ cho các lần làm mới sau.",
+    "connect_openapi_source_placeholder": "Ví dụ: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Nhập URL http(s) hợp lệ"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Tạo tài liệu",
-    "generate_message": "Nhập bất kỳ bộ sưu tập Hoppscotch nào để tạo tài liệu API ngay lập tức."
+    "generate_message": "Nhập bất kỳ bộ sưu tập Hoppscotch nào để tạo tài liệu API ngay lập tức.",
+    "schema_fields": {
+      "collapse": "Thu gọn tất cả",
+      "copy": "Sao chép tài liệu",
+      "copied": "Đã sao chép trường lược đồ dưới dạng Markdown",
+      "copy_failed": "Không sao chép được trường lược đồ",
+      "description": "Mô tả",
+      "expand": "Mở rộng tất cả",
+      "field": "Trường",
+      "required": "Bắt buộc",
+      "title": "Trường lược đồ",
+      "type": "Kiểu"
+    },
+    "response": {
+      "description": "Mô tả"
+    }
   },
   "empty": {
     "authorization": "Request này không sử dụng bất kỳ ủy quyền nào",

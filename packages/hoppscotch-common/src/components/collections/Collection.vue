@@ -150,6 +150,7 @@
                     isMockServerVisible && mockServerAction?.$el.click()
                   "
                   @keyup.i="documentationAction?.$el.click()"
+                  @keyup.u="refreshAction?.$el.click()"
                   @keyup.escape="hide()"
                 >
                   <HoppSmartItem
@@ -212,6 +213,24 @@
                     @click="
                       () => {
                         handleDocumentationAction()
+                        hide()
+                      }
+                    "
+                  />
+                  <HoppSmartItem
+                    v-if="canRefreshFromSource"
+                    ref="refreshAction"
+                    :icon="IconRefreshCw"
+                    :label="
+                      apiSpecSource
+                        ? t('collection.refresh_from_source')
+                        : t('collection.connect_openapi_source')
+                    "
+                    :shortcut="['U']"
+                    :loading="refreshCollectionLoading"
+                    @click="
+                      () => {
+                        emit('refresh-collection')
                         hide()
                       }
                     "
@@ -374,6 +393,7 @@ import { platform } from "~/platform"
 import { invokeAction } from "~/helpers/actions"
 import { DocumentationService } from "~/services/documentation.service"
 import IconGlobe from "~icons/lucide/globe"
+import IconRefreshCw from "~icons/lucide/refresh-cw"
 
 type CollectionType = "my-collections" | "team-collections"
 type FolderType = "collection" | "folder"
@@ -425,6 +445,7 @@ const emit = defineEmits<{
   (event: "edit-collection"): void
   (event: "edit-properties"): void
   (event: "duplicate-collection"): void
+  (event: "refresh-collection"): void
   (event: "open-documentation"): void
   (event: "export-data"): void
   (event: "remove-collection"): void
@@ -459,6 +480,7 @@ const propertiesAction = ref<HTMLButtonElement | null>(null)
 const runCollectionAction = ref<HTMLButtonElement | null>(null)
 const sortAction = ref<HTMLButtonElement | null>(null)
 const documentationAction = ref<HTMLButtonElement | null>(null)
+const refreshAction = ref<HTMLButtonElement | null>(null)
 
 const { isDocumentationVisible } = useDocumentationVisibility()
 const { isGqlWorkspaceEnabled } = useGqlWorkspaceVisibility()
@@ -548,6 +570,24 @@ const publishedDocStatus = computed(() => {
 const isRootCollection = computed(() => {
   return props.folderType === "collection"
 })
+
+// Only collections imported from a remote OpenAPI URL carry a source, and only
+// personal collections are rewritten locally (team ones live behind the API).
+const apiSpecSource = computed(() => {
+  if (props.collectionsType !== "my-collections") return null
+  if (props.folderType !== "collection") return null
+
+  return (props.data as HoppCollection).apiSpecSource ?? null
+})
+
+// Collections imported before provenance tracking (or from a spec file) have
+// no source yet — they still get the entry, which asks for the URL once and
+// stores it.
+const canRefreshFromSource = computed(
+  () =>
+    props.collectionsType === "my-collections" &&
+    props.folderType === "collection"
+)
 
 // Used to determine if the collection is being dragged to a different destination
 // This is used to make the highlight effect work

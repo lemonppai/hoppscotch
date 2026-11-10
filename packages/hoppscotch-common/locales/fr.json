@@ -345,7 +345,18 @@
     "select": "Sélectionner une collection",
     "select_location": "Sélectionner l'emplacement",
     "details": "Détails",
-    "duplicated": "Collection dupliquée"
+    "duplicated": "Collection dupliquée",
+    "refresh_from_source": "Actualiser depuis OpenAPI",
+    "refresh_success": "Collection actualisée ({added} ajoutés, {updated} mis à jour, {removed} absents de la spécification)",
+    "refresh_fetch_failed": "Impossible d'atteindre l'URL du document OpenAPI",
+    "refresh_parse_failed": "Le document OpenAPI n'a pas pu être analysé",
+    "refresh_no_source": "Cette collection n'a pas de source OpenAPI à actualiser",
+    "refresh_missing": "La collection n'existe plus",
+    "connect_openapi_source": "Connecter une source OpenAPI",
+    "connect_openapi_source_label": "URL du document OpenAPI",
+    "connect_openapi_source_description": "Cette collection n'a aucune source OpenAPI enregistrée. Saisissez l'URL du document une fois : elle sera mémorisée pour les prochaines actualisations.",
+    "connect_openapi_source_placeholder": "Exemple : https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Saisissez une URL http(s) valide"
   },
   "confirm": {
     "close_unsaved_tab": "Voulez-vous vraiment fermer cet onglet ?",
@@ -404,7 +415,22 @@
   },
   "documentation": {
     "generate": "Générer la documentation",
-    "generate_message": "Importer une collection Hoppscotch pour générer directement la documentation d'API associée."
+    "generate_message": "Importer une collection Hoppscotch pour générer directement la documentation d'API associée.",
+    "schema_fields": {
+      "collapse": "Tout réduire",
+      "copy": "Copier la doc",
+      "copied": "Champs du schéma copiés en Markdown",
+      "copy_failed": "Impossible de copier les champs du schéma",
+      "description": "Description",
+      "expand": "Tout développer",
+      "field": "Champ",
+      "required": "Requis",
+      "title": "Champs du schéma",
+      "type": "Type"
+    },
+    "response": {
+      "description": "Description"
+    }
   },
   "empty": {
     "activity_logs": "Aucune entrée de journalisation d'activité trouvée",

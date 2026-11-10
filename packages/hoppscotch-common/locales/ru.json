@@ -194,7 +194,18 @@
     "save_to_collection": "Сохранить в коллекцию",
     "select": "Выбрать коллекцию",
     "select_location": "Выберите местоположение",
-    "details": "Подробности"
+    "details": "Подробности",
+    "refresh_from_source": "Обновить из OpenAPI",
+    "refresh_success": "Коллекция обновлена (добавлено {added}, обновлено {updated}, {removed} больше нет в спецификации)",
+    "refresh_fetch_failed": "Не удалось получить доступ к URL документа OpenAPI",
+    "refresh_parse_failed": "Не удалось разобрать документ OpenAPI",
+    "refresh_no_source": "У этой коллекции нет источника OpenAPI для обновления",
+    "refresh_missing": "Коллекция больше не существует",
+    "connect_openapi_source": "Подключить источник OpenAPI",
+    "connect_openapi_source_label": "URL документа OpenAPI",
+    "connect_openapi_source_description": "У этой коллекции не записан источник OpenAPI. Укажите URL документа один раз — он запомнится для следующих обновлений.",
+    "connect_openapi_source_placeholder": "Пример: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Введите корректный URL http(s)"
   },
   "confirm": {
     "close_unsaved_tab": "Вы уверены, что хотите закрыть эту вкладку?",
@@ -247,7 +258,22 @@
   },
   "documentation": {
     "generate": "Создать документацию",
-    "generate_message": "Импортируйте любую коллекцию Hoppscotch для создания документации API на ходу."
+    "generate_message": "Импортируйте любую коллекцию Hoppscotch для создания документации API на ходу.",
+    "schema_fields": {
+      "collapse": "Свернуть все",
+      "copy": "Копировать документацию",
+      "copied": "Поля схемы скопированы в Markdown",
+      "copy_failed": "Не удалось скопировать поля схемы",
+      "description": "Описание",
+      "expand": "Развернуть все",
+      "field": "Поле",
+      "required": "Обязательно",
+      "title": "Поля схемы",
+      "type": "Тип"
+    },
+    "response": {
+      "description": "Описание"
+    }
   },
   "empty": {
     "authorization": "Этот запрос не использует авторизацию",

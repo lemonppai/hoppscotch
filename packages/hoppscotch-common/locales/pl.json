@@ -196,7 +196,18 @@
     "select_location": "Wybierz lokalizację",
     "details": "Details",
     "select_team": "Wybierz zespół",
-    "team_collections": "Kolekcje zespołowe"
+    "team_collections": "Kolekcje zespołowe",
+    "refresh_from_source": "Odśwież z OpenAPI",
+    "refresh_success": "Kolekcja odświeżona (dodano {added}, zaktualizowano {updated}, {removed} nie ma już w specyfikacji)",
+    "refresh_fetch_failed": "Nie można połączyć się z adresem dokumentu OpenAPI",
+    "refresh_parse_failed": "Nie udało się przetworzyć dokumentu OpenAPI",
+    "refresh_no_source": "Ta kolekcja nie ma źródła OpenAPI do odświeżenia",
+    "refresh_missing": "Kolekcja już nie istnieje",
+    "connect_openapi_source": "Połącz źródło OpenAPI",
+    "connect_openapi_source_label": "Adres dokumentu OpenAPI",
+    "connect_openapi_source_description": "Ta kolekcja nie ma zapisanego źródła OpenAPI. Podaj adres dokumentu raz — zostanie zapamiętany przy kolejnych odświeżeniach.",
+    "connect_openapi_source_placeholder": "Przykład: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Podaj prawidłowy adres http(s)"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Wygeneruj dokumentację",
-    "generate_message": "Importuj dowolną kolekcję Hoppscotch, aby generować dokumentację API na żądanie."
+    "generate_message": "Importuj dowolną kolekcję Hoppscotch, aby generować dokumentację API na żądanie.",
+    "schema_fields": {
+      "collapse": "Zwiń wszystko",
+      "copy": "Kopiuj dokumentację",
+      "copied": "Skopiowano pola schematu jako Markdown",
+      "copy_failed": "Nie udało się skopiować pól schematu",
+      "description": "Opis",
+      "expand": "Rozwiń wszystko",
+      "field": "Pole",
+      "required": "Wymagane",
+      "title": "Pola schematu",
+      "type": "Typ"
+    },
+    "response": {
+      "description": "Opis"
+    }
   },
   "empty": {
     "authorization": "To żądanie nie używa żadnej autoryzacji",

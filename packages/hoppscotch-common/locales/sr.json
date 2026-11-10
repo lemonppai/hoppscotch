@@ -196,7 +196,18 @@
     "select_location": "Изаберите локацију",
     "details": "Details",
     "select_team": "Изаберите тим",
-    "team_collections": "Збирке тима"
+    "team_collections": "Збирке тима",
+    "refresh_from_source": "Освежи из OpenAPI",
+    "refresh_success": "Колекција је освежена ({added} додато, {updated} ажурирано, {removed} више није у спецификацији)",
+    "refresh_fetch_failed": "Није могуће доћи до URL-а OpenAPI документа",
+    "refresh_parse_failed": "OpenAPI документ није могуће рашчланити",
+    "refresh_no_source": "Ова колекција нема OpenAPI извор за освежавање",
+    "refresh_missing": "Колекција више не постоји",
+    "connect_openapi_source": "Повежи OpenAPI извор",
+    "connect_openapi_source_label": "URL OpenAPI документа",
+    "connect_openapi_source_description": "Ова колекција нема забележен OpenAPI извор. Унесите URL документа једном и биће запамћен за будућа освежавања.",
+    "connect_openapi_source_placeholder": "Пример: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Унесите исправан http(s) URL"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Направите документацију",
-    "generate_message": "Увезите било коју Хоппсцотцх колекцију за генерисање АПИ документације у покрету."
+    "generate_message": "Увезите било коју Хоппсцотцх колекцију за генерисање АПИ документације у покрету.",
+    "schema_fields": {
+      "collapse": "Скупи све",
+      "copy": "Копирај документацију",
+      "copied": "Поља шеме су копирана као Markdown",
+      "copy_failed": "Копирање поља шеме није успело",
+      "description": "Опис",
+      "expand": "Прошири све",
+      "field": "Поље",
+      "required": "Обавезно",
+      "title": "Поља шеме",
+      "type": "Тип"
+    },
+    "response": {
+      "description": "Опис"
+    }
   },
   "empty": {
     "authorization": "Овај захтев не користи никаква овлашћења",

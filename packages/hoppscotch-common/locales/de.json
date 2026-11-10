@@ -279,7 +279,18 @@
     "select": "Wähle eine Sammlung",
     "select_location": "Ort auswählen",
     "details": "Details",
-    "duplicated": "Sammlung dupliziert"
+    "duplicated": "Sammlung dupliziert",
+    "refresh_from_source": "Aus OpenAPI aktualisieren",
+    "refresh_success": "Sammlung aktualisiert ({added} hinzugefügt, {updated} aktualisiert, {removed} nicht mehr in der Spezifikation)",
+    "refresh_fetch_failed": "Die URL des OpenAPI-Dokuments ist nicht erreichbar",
+    "refresh_parse_failed": "Das OpenAPI-Dokument konnte nicht gelesen werden",
+    "refresh_no_source": "Diese Sammlung hat keine OpenAPI-Quelle zum Aktualisieren",
+    "refresh_missing": "Sammlung existiert nicht mehr",
+    "connect_openapi_source": "OpenAPI-Quelle verbinden",
+    "connect_openapi_source_label": "URL des OpenAPI-Dokuments",
+    "connect_openapi_source_description": "Für diese Sammlung ist keine OpenAPI-Quelle hinterlegt. Gib die Dokument-URL einmal ein – sie wird für spätere Aktualisierungen gemerkt.",
+    "connect_openapi_source_placeholder": "Beispiel: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Gültige http(s)-URL eingeben"
   },
   "confirm": {
     "close_unsaved_tab": "Bist du sicher, dass du dieses Tab schließen möchtest?",
@@ -335,7 +346,22 @@
   },
   "documentation": {
     "generate": "Dokumentation erstellen",
-    "generate_message": "Importiere eine beliebige Hoppscotch-Sammlung, um unterwegs API-Dokumentation zu generieren."
+    "generate_message": "Importiere eine beliebige Hoppscotch-Sammlung, um unterwegs API-Dokumentation zu generieren.",
+    "schema_fields": {
+      "collapse": "Alle einklappen",
+      "copy": "Doku kopieren",
+      "copied": "Schemafelder als Markdown kopiert",
+      "copy_failed": "Schemafelder konnten nicht kopiert werden",
+      "description": "Beschreibung",
+      "expand": "Alle ausklappen",
+      "field": "Feld",
+      "required": "Erforderlich",
+      "title": "Schemafelder",
+      "type": "Typ"
+    },
+    "response": {
+      "description": "Beschreibung"
+    }
   },
   "empty": {
     "authorization": "Diese Anfrage verwendet keine Autorisierung",

@@ -196,7 +196,18 @@
     "select_location": "Pilih lokasi",
     "details": "Details",
     "select_team": "Pilih tim",
-    "team_collections": "Koleksi Tim"
+    "team_collections": "Koleksi Tim",
+    "refresh_from_source": "Segarkan dari OpenAPI",
+    "refresh_success": "Koleksi disegarkan ({added} ditambahkan, {updated} diperbarui, {removed} tidak lagi ada di spesifikasi)",
+    "refresh_fetch_failed": "Tidak dapat menjangkau URL dokumen OpenAPI",
+    "refresh_parse_failed": "Dokumen OpenAPI tidak dapat diurai",
+    "refresh_no_source": "Koleksi ini tidak memiliki sumber OpenAPI untuk disegarkan",
+    "refresh_missing": "Koleksi tidak ada lagi",
+    "connect_openapi_source": "Hubungkan sumber OpenAPI",
+    "connect_openapi_source_label": "URL dokumen OpenAPI",
+    "connect_openapi_source_description": "Koleksi ini belum memiliki sumber OpenAPI. Masukkan URL dokumen satu kali dan akan diingat untuk penyegaran berikutnya.",
+    "connect_openapi_source_placeholder": "Contoh: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Masukkan URL http(s) yang valid"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Buat dokumentasi",
-    "generate_message": "Impor koleksi Hoppscotch apa pun untuk menghasilkan dokumentasi API saat on-the-go."
+    "generate_message": "Impor koleksi Hoppscotch apa pun untuk menghasilkan dokumentasi API saat on-the-go.",
+    "schema_fields": {
+      "collapse": "Ciutkan semua",
+      "copy": "Salin dokumentasi",
+      "copied": "Bidang skema disalin sebagai Markdown",
+      "copy_failed": "Gagal menyalin bidang skema",
+      "description": "Deskripsi",
+      "expand": "Perluas semua",
+      "field": "Bidang",
+      "required": "Wajib",
+      "title": "Bidang Skema",
+      "type": "Tipe"
+    },
+    "response": {
+      "description": "Deskripsi"
+    }
   },
   "empty": {
     "authorization": "Permintaan ini tidak menggunakan otorisasi apa pun",

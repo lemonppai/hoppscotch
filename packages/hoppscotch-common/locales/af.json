@@ -196,7 +196,18 @@
     "select_location": "Kies ligging",
     "details": "Details",
     "select_team": "Kies 'n span",
-    "team_collections": "Spanversamelings"
+    "team_collections": "Spanversamelings",
+    "refresh_from_source": "Verfris vanaf OpenAPI",
+    "refresh_success": "Versameling verfris ({added} bygevoeg, {updated} opgedateer, {removed} nie meer in die spesifikasie nie)",
+    "refresh_fetch_failed": "Kon nie die OpenAPI-dokument se URL bereik nie",
+    "refresh_parse_failed": "Die OpenAPI-dokument kon nie ontleed word nie",
+    "refresh_no_source": "Hierdie versameling het geen OpenAPI-bron om van te verfris nie",
+    "refresh_missing": "Versameling bestaan nie meer nie",
+    "connect_openapi_source": "Koppel OpenAPI-bron",
+    "connect_openapi_source_label": "OpenAPI-dokument-URL",
+    "connect_openapi_source_description": "Hierdie versameling het geen OpenAPI-bron nie. Voer die dokument-URL een keer in; dit word vir toekomstige verfrissings onthou.",
+    "connect_openapi_source_placeholder": "Voorbeeld: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Voer 'n geldige http(s)-URL in"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Genereer dokumentasie",
-    "generate_message": "Voer enige Hoppscotch-versameling in om API-dokumentasie onderweg te genereer."
+    "generate_message": "Voer enige Hoppscotch-versameling in om API-dokumentasie onderweg te genereer.",
+    "schema_fields": {
+      "collapse": "Alles vou",
+      "copy": "Kopieer dokumentasie",
+      "copied": "Skema-velde as Markdown gekopieer",
+      "copy_failed": "Kon nie skema-velde kopieer nie",
+      "description": "Beskrywing",
+      "expand": "Alles uitbrei",
+      "field": "Veld",
+      "required": "Vereis",
+      "title": "Skema-velde",
+      "type": "Tipe"
+    },
+    "response": {
+      "description": "Beskrywing"
+    }
   },
   "empty": {
     "authorization": "Hierdie versoek gebruik geen magtiging nie",
@@ -1104,4 +1130,3 @@
     "url": "URL"
   }
 }
-

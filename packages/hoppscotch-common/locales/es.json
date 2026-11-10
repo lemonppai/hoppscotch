@@ -354,7 +354,18 @@
     "select_location": "Seleccionar ubicación",
     "sorted": "Colección ordenada",
     "details": "Detalles",
-    "duplicated": "Colección duplicada"
+    "duplicated": "Colección duplicada",
+    "refresh_from_source": "Actualizar desde OpenAPI",
+    "refresh_success": "Colección actualizada ({added} añadidos, {updated} actualizados, {removed} ya no están en la especificación)",
+    "refresh_fetch_failed": "No se pudo acceder a la URL del documento OpenAPI",
+    "refresh_parse_failed": "No se pudo analizar el documento OpenAPI",
+    "refresh_no_source": "Esta colección no tiene un origen OpenAPI del que actualizar",
+    "refresh_missing": "La colección ya no existe",
+    "connect_openapi_source": "Conectar origen OpenAPI",
+    "connect_openapi_source_label": "URL del documento OpenAPI",
+    "connect_openapi_source_description": "Esta colección no tiene un origen OpenAPI registrado. Introduce la URL del documento una vez y se recordará para futuras actualizaciones.",
+    "connect_openapi_source_placeholder": "Ejemplo: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Introduce una URL http(s) válida"
   },
   "confirm": {
     "close_unsaved_tab": "¿Seguro que quieres cerrar esta pestaña?",
@@ -570,7 +581,8 @@
       "example_copy_failed": "Error al copiar el ejemplo de respuesta",
       "headers": "Encabezados de la respuesta",
       "no_examples": "No hay ejemplos de respuesta disponibles",
-      "title": "Ejemplos de respuesta"
+      "title": "Ejemplos de respuesta",
+      "description": "Descripción"
     },
     "save_error": "Error al guardar la documentación",
     "save_success": "Documentación guardada correctamente",
@@ -586,7 +598,19 @@
       "no_vars": "No se definieron variables",
       "title": "Variables"
     },
-    "yes": "Sí"
+    "yes": "Sí",
+    "schema_fields": {
+      "collapse": "Contraer todo",
+      "copy": "Copiar documentación",
+      "copied": "Campos del esquema copiados como Markdown",
+      "copy_failed": "No se pudieron copiar los campos del esquema",
+      "description": "Descripción",
+      "expand": "Expandir todo",
+      "field": "Campo",
+      "required": "Obligatorio",
+      "title": "Campos del esquema",
+      "type": "Tipo"
+    }
   },
   "empty": {
     "activity_logs": "No se encontraron registros de actividad",

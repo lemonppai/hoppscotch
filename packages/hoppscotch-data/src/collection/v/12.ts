@@ -8,6 +8,19 @@ export const v12_baseCollectionSchema = v11_baseCollectionSchema.extend({
   v: z.literal(12),
   preRequestScript: z.string().catch(""),
   testScript: z.string().catch(""),
+  /**
+   * Where this collection was imported from, when it came from a remote spec.
+   * Drives the "refresh from source" action; `null` for hand-made collections
+   * and for everything imported before this field existed.
+   */
+  apiSpecSource: z
+    .object({
+      type: z.literal("openapi-url"),
+      url: z.string(),
+      syncedAt: z.string(),
+    })
+    .nullish()
+    .catch(null),
 })
 
 type Input = z.input<typeof v12_baseCollectionSchema> & {
@@ -31,6 +44,7 @@ export default defineVersion({
       v: 12 as const,
       preRequestScript: "",
       testScript: "",
+      apiSpecSource: null,
       folders: old.folders.map((folder) => {
         const result = HoppCollection.safeParseUpToVersion(folder, 12)
 

@@ -354,7 +354,18 @@
     "select_location": "选择位置",
     "sorted": "集合排序",
     "details": "详情",
-    "duplicated": "集合已复制"
+    "duplicated": "集合已复制",
+    "refresh_from_source": "从 OpenAPI 刷新",
+    "refresh_success": "集合已刷新（新增 {added} 个，更新 {updated} 个，{removed} 个已不在 spec 中）",
+    "refresh_fetch_failed": "无法访问该 OpenAPI 文档地址",
+    "refresh_parse_failed": "OpenAPI 文档解析失败",
+    "refresh_no_source": "该集合没有可刷新的 OpenAPI 来源",
+    "refresh_missing": "集合已不存在",
+    "connect_openapi_source": "关联 OpenAPI 来源",
+    "connect_openapi_source_label": "OpenAPI 文档地址",
+    "connect_openapi_source_description": "该集合尚未记录 OpenAPI 来源。填写一次文档地址后会记住，之后可直接刷新。",
+    "connect_openapi_source_placeholder": "示例：https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "请输入有效的 http(s) 地址"
   },
   "confirm": {
     "close_unsaved_tab": "您确定要关闭此标签页吗？",
@@ -586,6 +597,7 @@
     "response": {
         "body": "响应主体",
         "copy": "复制响应",
+        "description": "说明",
         "example_copied": "响应示例已复制到剪贴板！",
         "example_copy_failed": "复制响应示例失败",
         "headers": "响应头部",

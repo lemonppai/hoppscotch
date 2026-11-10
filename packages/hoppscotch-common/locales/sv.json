@@ -196,7 +196,18 @@
     "select_location": "Välj plats",
     "details": "Details",
     "select_team": "Välj ett lag",
-    "team_collections": "Lagsamlingar"
+    "team_collections": "Lagsamlingar",
+    "refresh_from_source": "Uppdatera från OpenAPI",
+    "refresh_success": "Samlingen uppdaterad ({added} tillagda, {updated} uppdaterade, {removed} finns inte längre i specifikationen)",
+    "refresh_fetch_failed": "Det gick inte att nå OpenAPI-dokumentets URL",
+    "refresh_parse_failed": "OpenAPI-dokumentet kunde inte tolkas",
+    "refresh_no_source": "Den här samlingen har ingen OpenAPI-källa att uppdatera från",
+    "refresh_missing": "Samlingen finns inte längre",
+    "connect_openapi_source": "Anslut OpenAPI-källa",
+    "connect_openapi_source_label": "URL till OpenAPI-dokument",
+    "connect_openapi_source_description": "Den här samlingen har ingen registrerad OpenAPI-källa. Ange dokumentets URL en gång, så sparas den för framtida uppdateringar.",
+    "connect_openapi_source_placeholder": "Exempel: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Ange en giltig http(s)-URL"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Skapa dokumentation",
-    "generate_message": "Importera en Hoppscotch-samling för att generera API-dokumentation när du är på språng."
+    "generate_message": "Importera en Hoppscotch-samling för att generera API-dokumentation när du är på språng.",
+    "schema_fields": {
+      "collapse": "Fäll ihop alla",
+      "copy": "Kopiera dokumentation",
+      "copied": "Schemafält kopierade som Markdown",
+      "copy_failed": "Det gick inte att kopiera schemafälten",
+      "description": "Beskrivning",
+      "expand": "Expandera alla",
+      "field": "Fält",
+      "required": "Obligatorisk",
+      "title": "Schemafält",
+      "type": "Typ"
+    },
+    "response": {
+      "description": "Beskrivning"
+    }
   },
   "empty": {
     "authorization": "Denna begäran använder inget tillstånd",

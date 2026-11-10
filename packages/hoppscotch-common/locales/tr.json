@@ -354,7 +354,18 @@
     "select_location": "Konum seçin",
     "sorted": "Koleksiyon sıralandı",
     "details": "Detaylar",
-    "duplicated": "Koleksiyon çoğaltıldı"
+    "duplicated": "Koleksiyon çoğaltıldı",
+    "refresh_from_source": "OpenAPI'den yenile",
+    "refresh_success": "Koleksiyon yenilendi ({added} eklendi, {updated} güncellendi, {removed} artık spesifikasyonda değil)",
+    "refresh_fetch_failed": "OpenAPI belgesinin URL'sine ulaşılamadı",
+    "refresh_parse_failed": "OpenAPI belgesi çözümlenemedi",
+    "refresh_no_source": "Bu koleksiyonun yenilenecek bir OpenAPI kaynağı yok",
+    "refresh_missing": "Koleksiyon artık mevcut değil",
+    "connect_openapi_source": "OpenAPI kaynağını bağla",
+    "connect_openapi_source_label": "OpenAPI belgesi URL'si",
+    "connect_openapi_source_description": "Bu koleksiyonda kayıtlı bir OpenAPI kaynağı yok. Belge URL'sini bir kez girin; sonraki yenilemeler için hatırlanacak.",
+    "connect_openapi_source_placeholder": "Örnek: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Geçerli bir http(s) URL'si girin"
   },
   "confirm": {
     "close_unsaved_tab": "Bu sekmeyi kapatmak istediğinizden emin misiniz?",
@@ -580,7 +591,8 @@
       "example_copy_failed": "Yanıt örneği kopyalanamadı",
       "headers": "Yanıt Header'ları",
       "no_examples": "Yanıt örneği mevcut değil",
-      "title": "Yanıt Örnekleri"
+      "title": "Yanıt Örnekleri",
+      "description": "Açıklama"
     },
     "save_error": "Dokümantasyon kaydedilirken hata oluştu",
     "save_success": "Dokümantasyon başarıyla kaydedildi",
@@ -599,7 +611,19 @@
       "no_vars": "Değişken tanımlanmadı",
       "title": "Değişkenler"
     },
-    "yes": "Evet"
+    "yes": "Evet",
+    "schema_fields": {
+      "collapse": "Tümünü daralt",
+      "copy": "Dokümanı kopyala",
+      "copied": "Şema alanları Markdown olarak kopyalandı",
+      "copy_failed": "Şema alanları kopyalanamadı",
+      "description": "Açıklama",
+      "expand": "Tümünü genişlet",
+      "field": "Alan",
+      "required": "Zorunlu",
+      "title": "Şema Alanları",
+      "type": "Tür"
+    }
   },
   "empty": {
     "activity_logs": "Etkinlik günlüğü bulunamadı",

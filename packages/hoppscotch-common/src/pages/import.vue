@@ -102,7 +102,12 @@ onMounted(async () => {
 
   const result = await importCollections(url, type)()
 
-  pipe(result, E.fold(handleImportFailure, handleImportSuccess))
+  pipe(
+    result,
+    E.fold(handleImportFailure, (collections) =>
+      handleImportSuccess(collections, { url, type })
+    )
+  )
 
   router.replace("/")
 })
@@ -118,12 +123,29 @@ const handleImportFailure = (error: ImportCollectionsError) => {
   toast.error(t(IMPORT_ERROR_MAP[error]).toString())
 }
 
-const handleImportSuccess = (collections: HoppCollection[]) => {
+const handleImportSuccess = (
+  collections: HoppCollection[],
+  source?: { url: unknown; type: unknown }
+) => {
+  // Remember where an OpenAPI collection came from so it can be refreshed
+  // later (`collection.refresh_from_source` in the collection menu).
+  const withSource =
+    source?.type === "openapi" && typeof source.url === "string"
+      ? collections.map((collection) => ({
+          ...collection,
+          apiSpecSource: {
+            type: "openapi-url" as const,
+            url: source.url as string,
+            syncedAt: new Date().toISOString(),
+          },
+        }))
+      : collections
+
   // Mirror the modal-import path: sanitize file-carried identities, stamp
   // `_ref_id`s, persist any raw secret values to the local secret store, then
   // append the stripped tree to newstore so localStorage / future syncs stay
   // clean.
-  const withRefIds = collections.map(sanitizeCollection).map(ensureRefIds)
+  const withRefIds = withSource.map(sanitizeCollection).map(ensureRefIds)
 
   withRefIds.forEach(populateLocalStoresFromCollectionTree)
   appendRESTCollections(withRefIds.map(stripCollectionTreeForStore))

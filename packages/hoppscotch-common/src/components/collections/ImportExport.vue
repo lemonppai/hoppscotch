@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { HoppCollection } from "@hoppscotch/data"
+import { HoppCollection, HoppCollectionAPISpecSource } from "@hoppscotch/data"
 import * as E from "fp-ts/Either"
 import { PropType, Ref, computed, ref } from "vue"
 import { transformCollectionForImport } from "~/helpers/collection/collection"
@@ -117,11 +117,25 @@ const showImportFailedError = () => {
   toast.error(t("import.failed"))
 }
 
-const handleImportToStore = async (collections: HoppCollection[]) => {
+const handleImportToStore = async (
+  collections: HoppCollection[],
+  source?: HoppCollectionAPISpecSource
+) => {
+  // Remember where an OpenAPI collection came from so the collection menu can
+  // offer "Refresh from OpenAPI" later. Team collections live behind the API
+  // and the menu entry is personal-only, so they are left untouched.
+  const withSource =
+    source && props.collectionsType.type === "my-collections"
+      ? collections.map((collection) => ({
+          ...collection,
+          apiSpecSource: source,
+        }))
+      : collections
+
   const importResult =
     props.collectionsType.type === "my-collections"
-      ? await importToPersonalWorkspace(collections)
-      : await importToTeamsWorkspace(collections)
+      ? await importToPersonalWorkspace(withSource)
+      : await importToTeamsWorkspace(withSource)
 
   if (E.isRight(importResult)) {
     toast.success(t("state.file_imported"))
@@ -428,13 +442,22 @@ const HoppOpenAPIImporter: ImporterOrExporter = {
       step: UrlSource({
         caption: "import.from_url",
         description: "import.from_openapi_import_summary",
-        onImportFromURL: async (content) => {
+        onImportFromURL: async (content, url) => {
           isOpenAPIImporterInProgress.value = true
 
           const res = await hoppOpenAPIImporter([content])()
 
           if (E.isRight(res)) {
-            await handleImportToStore(res.right)
+            await handleImportToStore(
+              res.right,
+              url
+                ? {
+                    type: "openapi-url",
+                    url,
+                    syncedAt: new Date().toISOString(),
+                  }
+                : undefined
+            )
 
             setCurrentImportSummary(res.right)
 

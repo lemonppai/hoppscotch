@@ -196,7 +196,18 @@
     "select_location": "Velg plassering",
     "details": "Details",
     "select_team": "Velg et lag",
-    "team_collections": "Lagsamlinger"
+    "team_collections": "Lagsamlinger",
+    "refresh_from_source": "Oppdater fra OpenAPI",
+    "refresh_success": "Samlingen er oppdatert ({added} lagt til, {updated} oppdatert, {removed} ikke lenger i spesifikasjonen)",
+    "refresh_fetch_failed": "Kunne ikke nå URL-en til OpenAPI-dokumentet",
+    "refresh_parse_failed": "OpenAPI-dokumentet kunne ikke tolkes",
+    "refresh_no_source": "Denne samlingen har ingen OpenAPI-kilde å oppdatere fra",
+    "refresh_missing": "Samlingen finnes ikke lenger",
+    "connect_openapi_source": "Koble til OpenAPI-kilde",
+    "connect_openapi_source_label": "URL til OpenAPI-dokument",
+    "connect_openapi_source_description": "Denne samlingen har ingen registrert OpenAPI-kilde. Skriv inn dokumentets URL én gang, så huskes den til senere oppdateringer.",
+    "connect_openapi_source_placeholder": "Eksempel: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Skriv inn en gyldig http(s)-URL"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Lag dokumentasjon",
-    "generate_message": "Importer en hvilken som helst Hoppscotch-samling for å generere API-dokumentasjon når du er på farten."
+    "generate_message": "Importer en hvilken som helst Hoppscotch-samling for å generere API-dokumentasjon når du er på farten.",
+    "schema_fields": {
+      "collapse": "Skjul alle",
+      "copy": "Kopier dokumentasjon",
+      "copied": "Skjemafelt kopiert som Markdown",
+      "copy_failed": "Kunne ikke kopiere skjemafelt",
+      "description": "Beskrivelse",
+      "expand": "Utvid alle",
+      "field": "Felt",
+      "required": "Påkrevd",
+      "title": "Skjemafelt",
+      "type": "Type"
+    },
+    "response": {
+      "description": "Beskrivelse"
+    }
   },
   "empty": {
     "authorization": "Denne forespørselen bruker ingen autorisasjon",

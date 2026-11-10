@@ -196,7 +196,18 @@
     "select_location": "Виберіть місце розташування",
     "details": "Details",
     "select_team": "Виберіть команду",
-    "team_collections": "Колекції команд"
+    "team_collections": "Колекції команд",
+    "refresh_from_source": "Оновити з OpenAPI",
+    "refresh_success": "Колекцію оновлено (додано {added}, оновлено {updated}, {removed} більше немає в специфікації)",
+    "refresh_fetch_failed": "Не вдалося отримати доступ до URL документа OpenAPI",
+    "refresh_parse_failed": "Не вдалося розібрати документ OpenAPI",
+    "refresh_no_source": "Ця колекція не має джерела OpenAPI для оновлення",
+    "refresh_missing": "Колекція більше не існує",
+    "connect_openapi_source": "Підключити джерело OpenAPI",
+    "connect_openapi_source_label": "URL документа OpenAPI",
+    "connect_openapi_source_description": "У цієї колекції не записано джерело OpenAPI. Вкажіть URL документа один раз, і він запам'ятається для наступних оновлень.",
+    "connect_openapi_source_placeholder": "Приклад: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Введіть коректний URL http(s)"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Створення документації",
-    "generate_message": "Імпортуйте будь-яку колекцію Hoppscotch для автоматичного створення API-документації на ходу."
+    "generate_message": "Імпортуйте будь-яку колекцію Hoppscotch для автоматичного створення API-документації на ходу.",
+    "schema_fields": {
+      "collapse": "Згорнути все",
+      "copy": "Копіювати документацію",
+      "copied": "Поля схеми скопійовано як Markdown",
+      "copy_failed": "Не вдалося скопіювати поля схеми",
+      "description": "Опис",
+      "expand": "Розгорнути все",
+      "field": "Поле",
+      "required": "Обов'язково",
+      "title": "Поля схеми",
+      "type": "Тип"
+    },
+    "response": {
+      "description": "Опис"
+    }
   },
   "empty": {
     "authorization": "У цьому запиті не використовується авторизація",

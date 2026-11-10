@@ -212,7 +212,18 @@
     "select_location": "選擇位置",
     "details": "Details",
     "select_team": "選擇一個團隊",
-    "team_collections": "團隊集合"
+    "team_collections": "團隊集合",
+    "refresh_from_source": "從 OpenAPI 重新整理",
+    "refresh_success": "集合已重新整理（新增 {added} 個、更新 {updated} 個、{removed} 個已不在 spec 中）",
+    "refresh_fetch_failed": "無法連線到該 OpenAPI 文件網址",
+    "refresh_parse_failed": "OpenAPI 文件解析失敗",
+    "refresh_no_source": "此集合沒有可重新整理的 OpenAPI 來源",
+    "refresh_missing": "集合已不存在",
+    "connect_openapi_source": "連結 OpenAPI 來源",
+    "connect_openapi_source_label": "OpenAPI 文件網址",
+    "connect_openapi_source_description": "此集合尚未記錄 OpenAPI 來源。填入一次文件網址後會記住，之後可直接重新整理。",
+    "connect_openapi_source_placeholder": "範例：https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "請輸入有效的 http(s) 網址"
   },
   "confirm": {
     "close_unsaved_tab": "您確定要關閉此分頁嗎？",
@@ -277,6 +288,9 @@
       "required": "必填",
       "title": "Schema 欄位",
       "type": "類型"
+    },
+    "response": {
+      "description": "說明"
     }
   },
   "empty": {

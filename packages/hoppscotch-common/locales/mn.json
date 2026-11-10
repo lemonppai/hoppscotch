@@ -354,7 +354,18 @@
     "select_location": "Байршлыг сонгоно уу",
     "sorted": "Цуглуулгыг эрэмбэлсэн",
     "details": "Дэлгэрэнгүй мэдээлэл",
-    "duplicated": "Цуглуулга давхардсан"
+    "duplicated": "Цуглуулга давхардсан",
+    "refresh_from_source": "OpenAPI-аас шинэчлэх",
+    "refresh_success": "Цуглуулгыг шинэчиллээ ({added} нэмэгдсэн, {updated} шинэчлэгдсэн, {removed} спецификацид байхгүй болсон)",
+    "refresh_fetch_failed": "OpenAPI баримтын URL-д хүрч чадсангүй",
+    "refresh_parse_failed": "OpenAPI баримтыг задлан шинжилж чадсангүй",
+    "refresh_no_source": "Энэ цуглуулгад шинэчлэх OpenAPI эх үүсвэр байхгүй",
+    "refresh_missing": "Цуглуулга байхгүй болсон",
+    "connect_openapi_source": "OpenAPI эх үүсвэр холбох",
+    "connect_openapi_source_label": "OpenAPI баримтын URL",
+    "connect_openapi_source_description": "Энэ цуглуулгад OpenAPI эх үүсвэр бүртгэгдээгүй. Баримтын URL-ийг нэг удаа оруулбал дараагийн шинэчлэлтэд санаж үлдэнэ.",
+    "connect_openapi_source_placeholder": "Жишээ: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Хүчинтэй http(s) URL оруулна уу"
   },
   "confirm": {
     "close_unsaved_tab": "Та энэ табыг хаахдаа итгэлтэй байна уу?",
@@ -570,7 +581,8 @@
       "example_copy_failed": "Хариултын жишээг хуулж чадсангүй",
       "headers": "Хариултын толгой",
       "no_examples": "Хариултын жишээ байхгүй",
-      "title": "Хариултын жишээ"
+      "title": "Хариултын жишээ",
+      "description": "Тайлбар"
     },
     "save_error": "Баримт бичгийг хадгалахад алдаа гарлаа",
     "save_success": "Баримт бичгийг амжилттай хадгаллаа",
@@ -586,7 +598,19 @@
       "no_vars": "Тодорхойлсон хувьсагч байхгүй",
       "title": "Хувьсагч"
     },
-    "yes": "Тиймээ"
+    "yes": "Тиймээ",
+    "schema_fields": {
+      "collapse": "Бүгдийг хумих",
+      "copy": "Баримт бичгийг хуулах",
+      "copied": "Схемийн талбаруудыг Markdown хэлбэрээр хуулсан",
+      "copy_failed": "Схемийн талбаруудыг хуулж чадсангүй",
+      "description": "Тайлбар",
+      "expand": "Бүгдийг дэлгэх",
+      "field": "Талбар",
+      "required": "Шаардлагатай",
+      "title": "Схемийн талбарууд",
+      "type": "Төрөл"
+    }
   },
   "empty": {
     "activity_logs": "Үйл ажиллагааны бүртгэл олдсонгүй",

@@ -195,7 +195,18 @@
     "select": "Vælg en samling",
     "select_location": "Vælg placering",
     "details": "Detaljer",
-    "duplicated": "Samling duplikeret"
+    "duplicated": "Samling duplikeret",
+    "refresh_from_source": "Opdater fra OpenAPI",
+    "refresh_success": "Samling opdateret ({added} tilføjet, {updated} opdateret, {removed} ikke længere i specifikationen)",
+    "refresh_fetch_failed": "Kunne ikke nå OpenAPI-dokumentets URL",
+    "refresh_parse_failed": "OpenAPI-dokumentet kunne ikke fortolkes",
+    "refresh_no_source": "Denne samling har ingen OpenAPI-kilde at opdatere fra",
+    "refresh_missing": "Samlingen findes ikke længere",
+    "connect_openapi_source": "Forbind OpenAPI-kilde",
+    "connect_openapi_source_label": "URL til OpenAPI-dokument",
+    "connect_openapi_source_description": "Denne samling har ingen registreret OpenAPI-kilde. Indtast dokumentets URL én gang, så huskes den til senere opdateringer.",
+    "connect_openapi_source_placeholder": "Eksempel: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Indtast en gyldig http(s)-URL"
   },
   "confirm": {
     "close_unsaved_tab": "Er du sikker på, at du vil lukke denne fane?",
@@ -248,7 +259,22 @@
   },
   "documentation": {
     "generate": "Generer dokumentation",
-    "generate_message": "Importér enhver Hoppscotch-samling for at generere API-dokumentation on-the-go."
+    "generate_message": "Importér enhver Hoppscotch-samling for at generere API-dokumentation on-the-go.",
+    "schema_fields": {
+      "collapse": "Skjul alle",
+      "copy": "Kopiér dokumentation",
+      "copied": "Skemafelter kopieret som Markdown",
+      "copy_failed": "Kunne ikke kopiere skemafelter",
+      "description": "Beskrivelse",
+      "expand": "Udvid alle",
+      "field": "Felt",
+      "required": "Påkrævet",
+      "title": "Skemafelter",
+      "type": "Type"
+    },
+    "response": {
+      "description": "Beskrivelse"
+    }
   },
   "empty": {
     "authorization": "Denne anmodning bruger ingen autorisation",

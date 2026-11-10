@@ -348,6 +348,25 @@ const restCollectionDispatchers = defineDispatchers({
     }
   },
 
+  /**
+   * Replaces a collection (root or nested folder) in place, located by
+   * `_ref_id`, preserving its position in the tree. Used by source refresh,
+   * where the whole subtree of a single collection is rebuilt.
+   */
+  replaceCollectionByRefId(
+    { state }: RESTCollectionStoreType,
+    { collection }: { collection: HoppCollection }
+  ) {
+    const replaceIn = (collections: HoppCollection[]): HoppCollection[] =>
+      collections.map((node) =>
+        node._ref_id === collection._ref_id
+          ? collection
+          : { ...node, folders: replaceIn(node.folders ?? []) }
+      )
+
+    return { state: replaceIn(state) }
+  },
+
   sortRESTCollection(
     { state }: RESTCollectionStoreType,
     {
@@ -1866,6 +1885,24 @@ export function editRESTCollection(
       partialCollection: partialCollection,
     },
   })
+}
+
+/**
+ * Swaps a collection subtree in place, matched by `_ref_id`.
+ * Returns false when no collection with that ref id exists (e.g. the
+ * collection was deleted while a refresh was in flight).
+ */
+export function replaceRESTCollectionByRefId(
+  collection: HoppCollection
+): boolean {
+  if (!getRESTCollectionByRefId(collection._ref_id)) return false
+
+  restCollectionStore.dispatch({
+    dispatcher: "replaceCollectionByRefId",
+    payload: { collection },
+  })
+
+  return true
 }
 
 export function sortRESTCollection(

@@ -196,7 +196,18 @@
     "select_location": "Selectați locația",
     "details": "Details",
     "select_team": "Selectați o echipă",
-    "team_collections": "Colecții de echipă"
+    "team_collections": "Colecții de echipă",
+    "refresh_from_source": "Reîmprospătează din OpenAPI",
+    "refresh_success": "Colecție reîmprospătată ({added} adăugate, {updated} actualizate, {removed} nu mai există în specificație)",
+    "refresh_fetch_failed": "Nu s-a putut accesa URL-ul documentului OpenAPI",
+    "refresh_parse_failed": "Documentul OpenAPI nu a putut fi analizat",
+    "refresh_no_source": "Această colecție nu are o sursă OpenAPI din care să reîmprospăteze",
+    "refresh_missing": "Colecția nu mai există",
+    "connect_openapi_source": "Conectează sursa OpenAPI",
+    "connect_openapi_source_label": "URL document OpenAPI",
+    "connect_openapi_source_description": "Această colecție nu are o sursă OpenAPI înregistrată. Introdu URL-ul documentului o dată și va fi reținut pentru reîmprospătări viitoare.",
+    "connect_openapi_source_placeholder": "Exemplu: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Introdu un URL http(s) valid"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Generați documentație",
-    "generate_message": "Importați orice colecție Hoppscotch pentru a genera documentație API în mișcare."
+    "generate_message": "Importați orice colecție Hoppscotch pentru a genera documentație API în mișcare.",
+    "schema_fields": {
+      "collapse": "Restrânge tot",
+      "copy": "Copiază documentația",
+      "copied": "Câmpurile schemei au fost copiate ca Markdown",
+      "copy_failed": "Copierea câmpurilor schemei a eșuat",
+      "description": "Descriere",
+      "expand": "Extinde tot",
+      "field": "Câmp",
+      "required": "Obligatoriu",
+      "title": "Câmpuri schemă",
+      "type": "Tip"
+    },
+    "response": {
+      "description": "Descriere"
+    }
   },
   "empty": {
     "authorization": "Această cerere nu folosește nicio autorizație",

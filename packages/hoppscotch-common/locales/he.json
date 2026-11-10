@@ -196,7 +196,18 @@
     "select_location": "תבחר מיקום",
     "details": "Details",
     "select_team": "בחר צוות",
-    "team_collections": "אוספי צוות"
+    "team_collections": "אוספי צוות",
+    "refresh_from_source": "רענון מ-OpenAPI",
+    "refresh_success": "האוסף רוענן ({added} נוספו, {updated} עודכנו, {removed} אינם במפרט יותר)",
+    "refresh_fetch_failed": "לא ניתן להגיע לכתובת מסמך ה-OpenAPI",
+    "refresh_parse_failed": "לא ניתן היה לנתח את מסמך ה-OpenAPI",
+    "refresh_no_source": "לאוסף זה אין מקור OpenAPI לרענון",
+    "refresh_missing": "האוסף כבר לא קיים",
+    "connect_openapi_source": "חיבור מקור OpenAPI",
+    "connect_openapi_source_label": "כתובת מסמך OpenAPI",
+    "connect_openapi_source_description": "לאוסף זה לא נרשם מקור OpenAPI. הזינו את כתובת המסמך פעם אחת והיא תישמר לרענונים הבאים.",
+    "connect_openapi_source_placeholder": "דוגמה: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "הזינו כתובת http(s) תקינה"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "צור תיעוד",
-    "generate_message": "ייבא כל אוסף Hoppscotch ליצירת תיעוד API תוך כדי תנועה."
+    "generate_message": "ייבא כל אוסף Hoppscotch ליצירת תיעוד API תוך כדי תנועה.",
+    "schema_fields": {
+      "collapse": "כווץ הכל",
+      "copy": "העתק תיעוד",
+      "copied": "שדות הסכימה הועתקו כ-Markdown",
+      "copy_failed": "העתקת שדות הסכימה נכשלה",
+      "description": "תיאור",
+      "expand": "הרחב הכל",
+      "field": "שדה",
+      "required": "חובה",
+      "title": "שדות סכימה",
+      "type": "סוג"
+    },
+    "response": {
+      "description": "תיאור"
+    }
   },
   "empty": {
     "authorization": "בקשה זו אינה משתמשת באישור כלשהו",

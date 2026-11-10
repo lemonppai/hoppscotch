@@ -354,7 +354,18 @@
     "select_location": "Valitse sijainti",
     "sorted": "Kokoelma järjestetty",
     "details": "Tiedot",
-    "duplicated": "Kokoelma kopioitu"
+    "duplicated": "Kokoelma kopioitu",
+    "refresh_from_source": "Päivitä OpenAPIsta",
+    "refresh_success": "Kokoelma päivitetty ({added} lisätty, {updated} päivitetty, {removed} ei enää määrittelyssä)",
+    "refresh_fetch_failed": "OpenAPI-dokumentin URL ei ole tavoitettavissa",
+    "refresh_parse_failed": "OpenAPI-dokumenttia ei voitu jäsentää",
+    "refresh_no_source": "Tällä kokoelmalla ei ole OpenAPI-lähdettä päivitettäväksi",
+    "refresh_missing": "Kokoelmaa ei enää ole",
+    "connect_openapi_source": "Yhdistä OpenAPI-lähde",
+    "connect_openapi_source_label": "OpenAPI-dokumentin URL",
+    "connect_openapi_source_description": "Tälle kokoelmalle ei ole tallennettu OpenAPI-lähdettä. Anna dokumentin URL kerran, niin se muistetaan tulevia päivityksiä varten.",
+    "connect_openapi_source_placeholder": "Esimerkki: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Anna kelvollinen http(s)-URL"
   },
   "confirm": {
     "close_unsaved_tab": "Haluatko varmasti sulkea tämän välilehden?",
@@ -570,7 +581,8 @@
       "example_copy_failed": "Vastausesimerkin kopiointi epäonnistui",
       "headers": "Vastauksen otsikot",
       "no_examples": "Ei vastausesimerkkejä saatavilla",
-      "title": "Vastausesimerkit"
+      "title": "Vastausesimerkit",
+      "description": "Kuvaus"
     },
     "save_error": "Virhe dokumentaation tallennuksessa",
     "save_success": "Dokumentaatio tallennettu onnistuneesti",
@@ -586,7 +598,19 @@
       "no_vars": "Muuttujia ei ole määritetty",
       "title": "Muuttujat"
     },
-    "yes": "Kyllä"
+    "yes": "Kyllä",
+    "schema_fields": {
+      "collapse": "Kutista kaikki",
+      "copy": "Kopioi dokumentaatio",
+      "copied": "Skeemakentät kopioitu Markdownina",
+      "copy_failed": "Skeemakenttien kopiointi epäonnistui",
+      "description": "Kuvaus",
+      "expand": "Laajenna kaikki",
+      "field": "Kenttä",
+      "required": "Pakollinen",
+      "title": "Skeemakentät",
+      "type": "Tyyppi"
+    }
   },
   "empty": {
     "activity_logs": "Toimintolokeja ei löytynyt",

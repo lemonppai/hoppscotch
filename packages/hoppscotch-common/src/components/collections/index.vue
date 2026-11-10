@@ -33,6 +33,7 @@
       :filter-text="filterTexts"
       :save-request="saveRequest"
       :picked="picked"
+      :refreshing-ref-i-d="refreshingRefID"
       @run-collection="
         runCollectionHandler({
           type: 'my-collections',
@@ -54,6 +55,7 @@
         displayModalImportExport(true, 'my-collections')
       "
       @duplicate-collection="duplicateCollection"
+      @refresh-collection="refreshCollection"
       @open-documentation="openDocumentation"
       @open-request-documentation="openRequestDocumentation"
       @duplicate-request="duplicateRequest"
@@ -168,6 +170,12 @@
       :loading-state="modalLoadingState"
       @hide-modal="displayModalEditCollection(false)"
       @submit="updateEditingCollection"
+    />
+    <CollectionsRefreshSourceModal
+      :show="showModalRefreshSource"
+      :loading="refreshSourceLoading"
+      @submit="connectAndRefreshSource"
+      @hide-modal="displayModalRefreshSource(false)"
     />
     <CollectionsEditFolder
       :show="showModalEditFolder"
@@ -373,6 +381,14 @@ import {
 } from "~/helpers/collection/request"
 import { TeamCollection } from "~/helpers/teams/TeamCollection"
 import { stripRefIdReplacer } from "~/helpers/import-export/export"
+import {
+  REFRESH_EMPTY_SPEC,
+  REFRESH_FETCH_FAILED,
+  REFRESH_NO_SOURCE,
+  REFRESH_PARSE_FAILED,
+  refreshOpenAPICollection,
+  type RefreshCollectionError,
+} from "~/helpers/import-export/refresh/openapi"
 import { hoppCollectionToOpenAPI } from "~/helpers/import-export/export/openapi"
 import TeamEnvironmentAdapter from "~/helpers/teams/TeamEnvironmentAdapter"
 import { TeamSearchService } from "~/helpers/teams/TeamsSearch.service"
@@ -393,6 +409,7 @@ import {
   removeRESTCollection,
   removeRESTFolder,
   removeRESTRequest,
+  replaceRESTCollectionByRefId,
   restCollectionStore,
   restCollections$,
   saveRESTRequestAs,
@@ -833,6 +850,10 @@ const showModalAdd = ref(false)
 const showModalAddRequest = ref(false)
 const showModalAddFolder = ref(false)
 const showModalEditCollection = ref(false)
+const showModalRefreshSource = ref(false)
+const refreshSourceCollection = ref<HoppCollection | null>(null)
+const refreshSourceLoading = ref(false)
+const refreshingRefID = ref("")
 const showModalEditFolder = ref(false)
 const showModalEditRequest = ref(false)
 const showModalEditResponse = ref(false)
@@ -1425,6 +1446,83 @@ const duplicateCollection = async ({
         }
       )
     )()
+  }
+}
+
+const REFRESH_ERROR_MESSAGES: Record<RefreshCollectionError, string> = {
+  [REFRESH_NO_SOURCE]: "collection.refresh_no_source",
+  [REFRESH_FETCH_FAILED]: "collection.refresh_fetch_failed",
+  [REFRESH_PARSE_FAILED]: "collection.refresh_parse_failed",
+  [REFRESH_EMPTY_SPEC]: "collection.refresh_parse_failed",
+}
+
+/**
+ * Re-pulls the OpenAPI document a collection was imported from and merges it
+ * back in, keeping local ids and everything the spec no longer documents.
+ */
+const refreshCollection = async ({
+  collection,
+}: {
+  collection: HoppCollection
+}) => {
+  if (collectionsType.value.type !== "my-collections") return
+
+  // Collections imported before provenance tracking (or from a spec file) have
+  // no stored source: ask for the URL once, then remember it.
+  if (!collection.apiSpecSource) {
+    refreshSourceCollection.value = collection
+    showModalRefreshSource.value = true
+    return
+  }
+
+  await runRefresh(collection)
+}
+
+const displayModalRefreshSource = (show: boolean) => {
+  showModalRefreshSource.value = show
+
+  if (!show) refreshSourceCollection.value = null
+}
+
+const connectAndRefreshSource = async (url: string) => {
+  const collection = refreshSourceCollection.value
+
+  if (!collection) return
+
+  if (await runRefresh(collection, url)) displayModalRefreshSource(false)
+}
+
+const runRefresh = async (collection: HoppCollection, sourceUrl?: string) => {
+  refreshSourceLoading.value = true
+  refreshingRefID.value = collection._ref_id ?? ""
+
+  try {
+    const result = await refreshOpenAPICollection(
+      collection,
+      undefined,
+      sourceUrl ? { sourceUrl } : {}
+    )
+
+    if (E.isLeft(result)) {
+      toast.error(t(REFRESH_ERROR_MESSAGES[result.left]).toString())
+      return false
+    }
+
+    if (!replaceRESTCollectionByRefId(result.right.collection)) {
+      toast.error(t("collection.refresh_missing").toString())
+      return false
+    }
+
+    const { added, updated, removed } = result.right.diff
+
+    toast.success(
+      t("collection.refresh_success", { added, updated, removed }).toString()
+    )
+
+    return true
+  } finally {
+    refreshSourceLoading.value = false
+    refreshingRefID.value = ""
   }
 }
 

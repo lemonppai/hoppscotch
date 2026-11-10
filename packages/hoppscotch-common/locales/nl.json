@@ -196,7 +196,18 @@
     "select_location": "Selecteer een locatie",
     "details": "Details",
     "select_team": "Selecteer een team",
-    "team_collections": "Teamcollecties"
+    "team_collections": "Teamcollecties",
+    "refresh_from_source": "Vernieuwen vanuit OpenAPI",
+    "refresh_success": "Collectie vernieuwd ({added} toegevoegd, {updated} bijgewerkt, {removed} niet meer in de spec)",
+    "refresh_fetch_failed": "Kon de URL van het OpenAPI-document niet bereiken",
+    "refresh_parse_failed": "Het OpenAPI-document kon niet worden verwerkt",
+    "refresh_no_source": "Deze collectie heeft geen OpenAPI-bron om uit te vernieuwen",
+    "refresh_missing": "Collectie bestaat niet meer",
+    "connect_openapi_source": "OpenAPI-bron koppelen",
+    "connect_openapi_source_label": "URL van OpenAPI-document",
+    "connect_openapi_source_description": "Voor deze collectie is geen OpenAPI-bron vastgelegd. Voer de document-URL één keer in; die wordt onthouden voor volgende vernieuwingen.",
+    "connect_openapi_source_placeholder": "Voorbeeld: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Voer een geldige http(s)-URL in"
   },
   "confirm": {
     "close_unsaved_tab": "Weet u zeker dat u dit tabblad wilt sluiten?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Documentatie genereren",
-    "generate_message": "Importeer elke Hoppscotch-verzameling om onderweg API-documentatie te genereren."
+    "generate_message": "Importeer elke Hoppscotch-verzameling om onderweg API-documentatie te genereren.",
+    "schema_fields": {
+      "collapse": "Alles invouwen",
+      "copy": "Documentatie kopiëren",
+      "copied": "Schemavelden gekopieerd als Markdown",
+      "copy_failed": "Kopiëren van schemavelden mislukt",
+      "description": "Beschrijving",
+      "expand": "Alles uitvouwen",
+      "field": "Veld",
+      "required": "Verplicht",
+      "title": "Schemavelden",
+      "type": "Type"
+    },
+    "response": {
+      "description": "Beschrijving"
+    }
   },
   "empty": {
     "authorization": "Dit verzoek gebruikt geen autorisatie",

@@ -354,7 +354,18 @@
     "select_location": "เลือกตำแหน่ง",
     "sorted": "จัดเรียงคอลเลกชันแล้ว",
     "details": "รายละเอียด",
-    "duplicated": "ทำสำเนาคอลเลกชันแล้ว"
+    "duplicated": "ทำสำเนาคอลเลกชันแล้ว",
+    "refresh_from_source": "รีเฟรชจาก OpenAPI",
+    "refresh_success": "รีเฟรชคอลเลกชันแล้ว (เพิ่ม {added} รายการ, อัปเดต {updated} รายการ, {removed} รายการไม่อยู่ในสเปกแล้ว)",
+    "refresh_fetch_failed": "ไม่สามารถเข้าถึง URL ของเอกสาร OpenAPI",
+    "refresh_parse_failed": "ไม่สามารถแยกวิเคราะห์เอกสาร OpenAPI ได้",
+    "refresh_no_source": "คอลเลกชันนี้ไม่มีแหล่ง OpenAPI ให้รีเฟรช",
+    "refresh_missing": "ไม่มีคอลเลกชันนี้แล้ว",
+    "connect_openapi_source": "เชื่อมต่อแหล่ง OpenAPI",
+    "connect_openapi_source_label": "URL ของเอกสาร OpenAPI",
+    "connect_openapi_source_description": "คอลเลกชันนี้ยังไม่ได้บันทึกแหล่ง OpenAPI กรอก URL ของเอกสารหนึ่งครั้งแล้วระบบจะจำไว้สำหรับการรีเฟรชครั้งถัดไป",
+    "connect_openapi_source_placeholder": "ตัวอย่าง: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "กรอก URL http(s) ที่ถูกต้อง"
   },
   "confirm": {
     "close_unsaved_tab": "คุณแน่ใจหรือไม่ว่าต้องการปิดแท็บนี้?",
@@ -570,7 +581,8 @@
       "example_copy_failed": "คัดลอกตัวอย่างการตอบกลับไม่สำเร็จ",
       "headers": "ส่วนหัวการตอบกลับ",
       "no_examples": "ไม่มีตัวอย่างการตอบกลับ",
-      "title": "ตัวอย่างการตอบกลับ"
+      "title": "ตัวอย่างการตอบกลับ",
+      "description": "คำอธิบาย"
     },
     "save_error": "เกิดข้อผิดพลาดในการบันทึกเอกสาร",
     "save_success": "บันทึกเอกสารเรียบร้อยแล้ว",
@@ -586,7 +598,19 @@
       "no_vars": "ไม่ได้กำหนดตัวแปร",
       "title": "ตัวแปร"
     },
-    "yes": "ใช่"
+    "yes": "ใช่",
+    "schema_fields": {
+      "collapse": "ย่อทั้งหมด",
+      "copy": "คัดลอกเอกสาร",
+      "copied": "คัดลอกฟิลด์สคีมาเป็น Markdown แล้ว",
+      "copy_failed": "คัดลอกฟิลด์สคีมาไม่สำเร็จ",
+      "description": "คำอธิบาย",
+      "expand": "ขยายทั้งหมด",
+      "field": "ฟิลด์",
+      "required": "จำเป็น",
+      "title": "ฟิลด์ของสคีมา",
+      "type": "ชนิด"
+    }
   },
   "empty": {
     "activity_logs": "ไม่พบบันทึกกิจกรรม",

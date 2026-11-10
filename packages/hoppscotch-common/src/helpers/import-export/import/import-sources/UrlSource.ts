@@ -6,7 +6,12 @@ import { Ref } from "vue"
 
 export function UrlSource(metadata: {
   caption: string
-  onImportFromURL: (content: string) => any | Promise<any>
+  /**
+   * `url` is the address the document was fetched from (undefined when the
+   * step was replayed from a cached payload). Importers that can track
+   * provenance — OpenAPI does — use it to stamp the source on the collection.
+   */
+  onImportFromURL: (content: string, url?: string) => any | Promise<any>
   fetchLogic?: (url: string) => Promise<any>
   isLoading?: Ref<boolean>
   description: string
@@ -15,9 +20,12 @@ export function UrlSource(metadata: {
 
   return defineStep(stepID, UrlImport, () => ({
     caption: metadata.caption,
-    onImportFromURL: (content: unknown) => {
+    onImportFromURL: (content: unknown, url: unknown) => {
       if (typeof content === "string") {
-        metadata.onImportFromURL(content)
+        metadata.onImportFromURL(
+          content,
+          typeof url === "string" && url !== "" ? url : undefined
+        )
       }
     },
     loading: metadata.isLoading?.value,

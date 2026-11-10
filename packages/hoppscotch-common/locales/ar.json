@@ -196,7 +196,18 @@
     "select_location": "اختر موقعا",
     "details": "تفاصيل",
     "select_team": "اختر فريقًا",
-    "team_collections": "مجموعات الفريق"
+    "team_collections": "مجموعات الفريق",
+    "refresh_from_source": "تحديث من OpenAPI",
+    "refresh_success": "تم تحديث المجموعة (أُضيف {added}، حُدّث {updated}، {removed} لم يعد في المواصفة)",
+    "refresh_fetch_failed": "تعذّر الوصول إلى رابط مستند OpenAPI",
+    "refresh_parse_failed": "تعذّر تحليل مستند OpenAPI",
+    "refresh_no_source": "لا تحتوي هذه المجموعة على مصدر OpenAPI للتحديث منه",
+    "refresh_missing": "المجموعة لم تعد موجودة",
+    "connect_openapi_source": "ربط مصدر OpenAPI",
+    "connect_openapi_source_label": "رابط مستند OpenAPI",
+    "connect_openapi_source_description": "لا تحتوي هذه المجموعة على مصدر OpenAPI مسجّل. أدخل رابط المستند مرة واحدة وسيُحفظ للتحديثات القادمة.",
+    "connect_openapi_source_placeholder": "مثال: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "أدخل رابط http(s) صالحًا"
   },
   "confirm": {
     "close_unsaved_tab": "هل أنت متأكد أنك تريد إغلاق هذه التبويبة؟",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "توليد docs",
-    "generate_message": "قم باستيراد أي مجموعة هوبسكوتش لإنشاء API docs أثناء التنقل."
+    "generate_message": "قم باستيراد أي مجموعة هوبسكوتش لإنشاء API docs أثناء التنقل.",
+    "schema_fields": {
+      "collapse": "طي الكل",
+      "copy": "نسخ التوثيق",
+      "copied": "تم نسخ حقول المخطط بصيغة Markdown",
+      "copy_failed": "تعذّر نسخ حقول المخطط",
+      "description": "الوصف",
+      "expand": "توسيع الكل",
+      "field": "الحقل",
+      "required": "مطلوب",
+      "title": "حقول المخطط",
+      "type": "النوع"
+    },
+    "response": {
+      "description": "الوصف"
+    }
   },
   "empty": {
     "authorization": "هذا الطلب لا يستخدم أي إذن",

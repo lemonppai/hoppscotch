@@ -56,6 +56,14 @@ export const HoppCollection = createVersionedEntity({
 
 export type HoppCollection = InferredEntity<typeof HoppCollection>
 
+/**
+ * Provenance of a collection that was imported from a remote API spec.
+ * Present only on collections created by an OpenAPI URL import.
+ */
+export type HoppCollectionAPISpecSource = NonNullable<
+  HoppCollection["apiSpecSource"]
+>
+
 export type HoppCollectionVariable = InferredEntity<
   typeof HoppCollection
 >["variables"][number]
@@ -121,6 +129,7 @@ export function translateToNewCollection(x: any): HoppCollection {
     description,
     preRequestScript,
     testScript,
+    apiSpecSource: x.apiSpecSource ?? null,
   })
 
   if (x.id) obj.id = x.id

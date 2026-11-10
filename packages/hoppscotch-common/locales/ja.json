@@ -196,7 +196,18 @@
     "select_location": "場所を選択",
     "details": "Details",
     "select_team": "チームを選択",
-    "team_collections": "チームコレクション"
+    "team_collections": "チームコレクション",
+    "refresh_from_source": "OpenAPI から更新",
+    "refresh_success": "コレクションを更新しました（追加 {added} 件、更新 {updated} 件、仕様から削除 {removed} 件）",
+    "refresh_fetch_failed": "OpenAPI ドキュメントの URL に接続できませんでした",
+    "refresh_parse_failed": "OpenAPI ドキュメントを解析できませんでした",
+    "refresh_no_source": "このコレクションには更新元の OpenAPI がありません",
+    "refresh_missing": "コレクションは既に存在しません",
+    "connect_openapi_source": "OpenAPI ソースを接続",
+    "connect_openapi_source_label": "OpenAPI ドキュメントの URL",
+    "connect_openapi_source_description": "このコレクションには OpenAPI ソースが記録されていません。ドキュメントの URL を一度入力すると、次回以降の更新で使われます。",
+    "connect_openapi_source_placeholder": "例：https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "有効な http(s) URL を入力してください"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "ドキュメントを生成",
-    "generate_message": "Hoppscotchのコレクションをインポートして、APIドキュメントをすぐに生成することができます。"
+    "generate_message": "Hoppscotchのコレクションをインポートして、APIドキュメントをすぐに生成することができます。",
+    "schema_fields": {
+      "collapse": "すべて折りたたむ",
+      "copy": "ドキュメントをコピー",
+      "copied": "スキーマフィールドを Markdown としてコピーしました",
+      "copy_failed": "スキーマフィールドのコピーに失敗しました",
+      "description": "説明",
+      "expand": "すべて展開",
+      "field": "フィールド",
+      "required": "必須",
+      "title": "スキーマフィールド",
+      "type": "型"
+    },
+    "response": {
+      "description": "説明"
+    }
   },
   "empty": {
     "authorization": "このリクエストでは認証を使用しません",

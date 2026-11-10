@@ -353,7 +353,18 @@
     "select_location": "Vyberte umístění",
     "sorted": "Kolekce seřazena",
     "details": "Podrobnosti",
-    "duplicated": "Kolekce duplikována"
+    "duplicated": "Kolekce duplikována",
+    "refresh_from_source": "Obnovit z OpenAPI",
+    "refresh_success": "Kolekce obnovena ({added} přidáno, {updated} aktualizováno, {removed} již není ve specifikaci)",
+    "refresh_fetch_failed": "Nepodařilo se připojit k URL dokumentu OpenAPI",
+    "refresh_parse_failed": "Dokument OpenAPI se nepodařilo zpracovat",
+    "refresh_no_source": "Tato kolekce nemá zdroj OpenAPI, ze kterého by šla obnovit",
+    "refresh_missing": "Kolekce již neexistuje",
+    "connect_openapi_source": "Připojit zdroj OpenAPI",
+    "connect_openapi_source_label": "URL dokumentu OpenAPI",
+    "connect_openapi_source_description": "Tato kolekce nemá zaznamenaný zdroj OpenAPI. Zadejte URL dokumentu jednou a zapamatuje se pro další obnovení.",
+    "connect_openapi_source_placeholder": "Příklad: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Zadejte platnou URL http(s)"
   },
   "confirm": {
     "close_unsaved_tab": "Opravdu chcete zavřít tuto kartu?",
@@ -541,7 +552,8 @@
       "example_copy_failed": "Příklad odpovědi se nepodařilo zkopírovat",
       "headers": "Hlavičky odpovědi",
       "no_examples": "Nejsou k dispozici žádné příklady odpovědí",
-      "title": "Příklady odpovědí"
+      "title": "Příklady odpovědí",
+      "description": "Popis"
     },
     "save_error": "Při ukládání dokumentace došlo k chybě",
     "save_success": "Dokumentace byla úspěšně uložena",
@@ -557,7 +569,19 @@
       "no_vars": "Nejsou definovány žádné proměnné",
       "title": "Proměnné"
     },
-    "yes": "Ano"
+    "yes": "Ano",
+    "schema_fields": {
+      "collapse": "Sbalit vše",
+      "copy": "Kopírovat dokumentaci",
+      "copied": "Pole schématu zkopírována jako Markdown",
+      "copy_failed": "Kopírování polí schématu selhalo",
+      "description": "Popis",
+      "expand": "Rozbalit vše",
+      "field": "Pole",
+      "required": "Povinné",
+      "title": "Pole schématu",
+      "type": "Typ"
+    }
   },
   "empty": {
     "activity_logs": "Nebyly nalezeny žádné protokoly aktivit",

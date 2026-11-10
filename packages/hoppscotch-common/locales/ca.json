@@ -196,7 +196,18 @@
     "select_location": "Seleccionar la ubicació",
     "details": "Details",
     "select_team": "Seleccionar un equip",
-    "team_collections": "Col·leccions per equips"
+    "team_collections": "Col·leccions per equips",
+    "refresh_from_source": "Actualitza des d'OpenAPI",
+    "refresh_success": "Col·lecció actualitzada ({added} afegits, {updated} actualitzats, {removed} ja no a l'especificació)",
+    "refresh_fetch_failed": "No s'ha pogut accedir a l'URL del document OpenAPI",
+    "refresh_parse_failed": "No s'ha pogut analitzar el document OpenAPI",
+    "refresh_no_source": "Aquesta col·lecció no té cap origen OpenAPI des del qual actualitzar",
+    "refresh_missing": "La col·lecció ja no existeix",
+    "connect_openapi_source": "Connecta un origen OpenAPI",
+    "connect_openapi_source_label": "URL del document OpenAPI",
+    "connect_openapi_source_description": "Aquesta col·lecció no té cap origen OpenAPI registrat. Introdueix l'URL del document una vegada i es recordarà per a futures actualitzacions.",
+    "connect_openapi_source_placeholder": "Exemple: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Introdueix un URL http(s) vàlid"
   },
   "confirm": {
     "close_unsaved_tab": "Are you sure you want to close this tab?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Generar documentació",
-    "generate_message": "Importeu qualsevol col·lecció Hoppscotch per generar documentació de l'API sobre la marxa."
+    "generate_message": "Importeu qualsevol col·lecció Hoppscotch per generar documentació de l'API sobre la marxa.",
+    "schema_fields": {
+      "collapse": "Replega-ho tot",
+      "copy": "Copia la documentació",
+      "copied": "Camps de l'esquema copiats com a Markdown",
+      "copy_failed": "No s'han pogut copiar els camps de l'esquema",
+      "description": "Descripció",
+      "expand": "Expandeix-ho tot",
+      "field": "Camp",
+      "required": "Obligatori",
+      "title": "Camps de l'esquema",
+      "type": "Tipus"
+    },
+    "response": {
+      "description": "Descripció"
+    }
   },
   "empty": {
     "authorization": "Aquesta sol·licitud no utilitza cap autorització",

@@ -353,7 +353,18 @@
         "select_location": "Ընտրել վայրը",
         "sorted": "Հավաքածուն տեսակավորված է",
         "details": "Մանրամասներ",
-        "duplicated": "Հավաքածուն կրկնօրինակվել է"
+        "duplicated": "Հավաքածուն կրկնօրինակվել է",
+        "refresh_from_source": "Թարմացնել OpenAPI-ից",
+        "refresh_success": "Հավաքածուն թարմացվեց ({added} ավելացված, {updated} թարմացված, {removed} այլևս սպեցիֆիկացիայում չեն)",
+        "refresh_fetch_failed": "Չհաջողվեց հասնել OpenAPI փաստաթղթի հասցեին",
+        "refresh_parse_failed": "OpenAPI փաստաթուղթը չհաջողվեց վերլուծել",
+        "refresh_no_source": "Այս հավաքածուն OpenAPI աղբյուր չունի թարմացնելու համար",
+        "refresh_missing": "Հավաքածուն այլևս գոյություն չունի",
+        "connect_openapi_source": "Միացնել OpenAPI աղբյուրը",
+        "connect_openapi_source_label": "OpenAPI փաստաթղթի հասցե",
+        "connect_openapi_source_description": "Այս հավաքածուն գրանցված OpenAPI աղբյուր չունի։ Մուտքագրեք փաստաթղթի հասցեն մեկ անգամ, և այն կհիշվի հետագա թարմացումների համար։",
+        "connect_openapi_source_placeholder": "Օրինակ՝ https://example.com/openapi.json",
+        "connect_openapi_source_invalid": "Մուտքագրեք վավեր http(s) հասցե"
     },
     "confirm": {
         "close_unsaved_tab": "Վստա՞հ եք, որ ցանկանում եք փակել այս ներդիրը:",
@@ -541,7 +552,8 @@
             "example_copy_failed": "Պատասխանի օրինակի պատճենումը ձախողվեց",
             "headers": "Պատասխանի վերնագրեր",
             "no_examples": "Պատասխանի օրինակներ առկա չեն",
-            "title": "Պատասխանի օրինակներ"
+            "title": "Պատասխանի օրինակներ",
+            "description": "Նկարագրություն"
         },
         "save_error": "Սխալ՝ փաստաթղթավորման պահպանման ժամանակ",
         "save_success": "Փաստաթղթավորումը հաջողությամբ պահպանվեց",
@@ -557,7 +569,19 @@
             "no_vars": "Փոփոխականներ սահմանված չեն",
             "title": "Փոփոխականներ"
         },
-        "yes": "Այո"
+        "yes": "Այո",
+        "schema_fields": {
+            "collapse": "Փակել բոլորը",
+            "copy": "Պատճենել փաստաթղթերը",
+            "copied": "Սխեմայի դաշտերը պատճենվեցին որպես Markdown",
+            "copy_failed": "Չհաջողվեց պատճենել սխեմայի դաշտերը",
+            "description": "Նկարագրություն",
+            "expand": "Բացել բոլորը",
+            "field": "Դաշտ",
+            "required": "Պարտադիր",
+            "title": "Սխեմայի դաշտեր",
+            "type": "Տեսակ"
+        }
     },
     "empty": {
         "activity_logs": "Գործունեության մատյաններ չեն գտնվել",

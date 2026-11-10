@@ -196,7 +196,18 @@
     "select_location": "Hely kiválasztása",
     "details": "Details",
     "select_team": "Csapat kiválasztása",
-    "team_collections": "Csapat gyűjteményei"
+    "team_collections": "Csapat gyűjteményei",
+    "refresh_from_source": "Frissítés OpenAPI-ból",
+    "refresh_success": "Gyűjtemény frissítve ({added} hozzáadva, {updated} frissítve, {removed} már nincs a specifikációban)",
+    "refresh_fetch_failed": "Az OpenAPI dokumentum URL-je nem érhető el",
+    "refresh_parse_failed": "Az OpenAPI dokumentumot nem sikerült feldolgozni",
+    "refresh_no_source": "Ennek a gyűjteménynek nincs OpenAPI forrása a frissítéshez",
+    "refresh_missing": "A gyűjtemény már nem létezik",
+    "connect_openapi_source": "OpenAPI forrás csatolása",
+    "connect_openapi_source_label": "OpenAPI dokumentum URL",
+    "connect_openapi_source_description": "Ehhez a gyűjteményhez nincs rögzített OpenAPI forrás. Add meg egyszer a dokumentum URL-jét, és megjegyezzük a későbbi frissítésekhez.",
+    "connect_openapi_source_placeholder": "Példa: https://example.com/openapi.json",
+    "connect_openapi_source_invalid": "Adj meg érvényes http(s) URL-t"
   },
   "confirm": {
     "close_unsaved_tab": "Biztos, hogy bezárja ezt a lapot?",
@@ -249,7 +260,22 @@
   },
   "documentation": {
     "generate": "Dokumentáció előállítása",
-    "generate_message": "Importáljon bármilyen Hoppscotch-gyűjteményt, hogy API-dokumentációt készítsen a folyamat során."
+    "generate_message": "Importáljon bármilyen Hoppscotch-gyűjteményt, hogy API-dokumentációt készítsen a folyamat során.",
+    "schema_fields": {
+      "collapse": "Összes összecsukása",
+      "copy": "Dokumentáció másolása",
+      "copied": "Séma mezők másolva Markdownként",
+      "copy_failed": "Nem sikerült másolni a séma mezőket",
+      "description": "Leírás",
+      "expand": "Összes kinyitása",
+      "field": "Mező",
+      "required": "Kötelező",
+      "title": "Séma mezők",
+      "type": "Típus"
+    },
+    "response": {
+      "description": "Leírás"
+    }
   },
   "empty": {
     "authorization": "Ez a kérés nem használ azonosítást",
